@@ -4,6 +4,24 @@
 	</li>
 </ul>
 <ul class="navbar-nav ml-auto">
+	@php
+		$lang = config('app.locale');
+	@endphp
+	<li class="nav-item dropdown">
+		<a class="nav-link" data-toggle="dropdown">
+			<img src="{{ asset('img/' . $lang . '.png') }}" alt="en" width="30" height="30">
+		</a>
+		<div class="dropdown-menu dropdown-menu-right p-0">
+			<a class="dropdown-item" href="{{ route('change_lang', ['lang' => 'en']) }}">
+				<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
+				Ingles
+			</a>
+			<a class="dropdown-item" href="{{ route('change_lang', ['lang' => 'es']) }}">
+				<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
+				Español
+			</a>
+		</div>
+	</li>
 	<li class="nav-item dropdown user-menu">
 		<a class="nav-link dropdown-toggle btn" data-toggle="dropdown">
 			<img src="{{ asset('img/user3-128x128.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">

@@ -57,16 +57,16 @@
                     @auth
                         <a href="{{ route('dashboard') }}">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">{{ __('Login') }}</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     @endauth
                 </div>
             @endif
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel {{ config('app.locale') }}
                 </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>

@@ -1,7 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Route;
+Route::get('lang/{lang}', function($lang) {
+	\Session::put('lang', $lang);
+	return \Redirect::back();
+})->name('change_lang');
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.home');
 });
 Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

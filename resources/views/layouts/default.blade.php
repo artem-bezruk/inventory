@@ -7,7 +7,7 @@
 	<title>Inventaris - @yield('title')</title>
 	@yield('css-main')
 </head>
-<body class="hold-transition">
+<body class="hold-transition pace-primary">
 	@yield('content-main')
 	@yield('js-main')
 </body>

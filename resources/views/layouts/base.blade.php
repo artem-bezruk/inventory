@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 	<link href="{{ asset('fonts/SourceSansPro.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	@yield('css')
 @endsection
 @section('content-main')
@@ -47,5 +48,6 @@
 	<script>
 		$('body').addClass('sidebar-mini layout-fixed')
 	</script>
+	<script src="{{ asset('plugins/pace-progress/pace.min.js') }}" type="text/javascript"></script>
 	@yield('script')
 @endsection
