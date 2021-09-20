@@ -1,17 +1,15 @@
 <?php
 namespace App\Http\Middleware;
 use Closure;
-use Session;
 use App;
-use Config;
 class Language
 {
     public function handle($request, Closure $next)
     {
-        if (Session::has("lang")) {
-            $lang = Session::get("lang");
-        } else {
-            $lang = "es";
+        $languages = [ "en", "es" ];
+        $lang = $request->segment(1);
+        if (!in_array($lang, $languages)) {
+            abort(404);
         }
         App::setLocale($lang);
         return $next($request);

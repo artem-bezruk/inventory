@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Home')
+@section('title', __('404 Page not found'))
 @section('css-main')
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
@@ -10,24 +10,17 @@
 @endsection
 @section('content-main')
 	<div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-            <div class="top-right links">
-                @auth
-                    <a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}">Dashboard</a>
-                @else
-                    <a href="{{ route('login', ['locale' => app()->getLocale()]) }}">{{ __('Login') }}</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register', ['locale' => app()->getLocale()]) }}">{{ __('Register') }}</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
         <div class="content">
             <div class="title m-b-md">
-            	<img src="{{ asset('img/icon200x200.png') }}" alt="">
-            	<span>Inventaris</span>
-                {{ config('app.locale') }}
+            	<i class="fas fa-exclamation-triangle text-danger"></i>
+            	<span>400</span>
             </div>
+            <div>
+            	<p class="text-monospace">{{ __('We could not find the page you were looking for.') }}</p>
+            </div>
+        	<div>
+        		<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="btn btn-danger" role="button">{{ __('Go home') }}</a>
+	        </div>
         </div>
     </div>
 @endsection
