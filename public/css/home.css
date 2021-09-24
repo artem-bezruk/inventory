@@ -30,6 +30,11 @@ span {
     right: 10px;
     top: 18px;
 }
+.top-left {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+}
 .content {
     text-align: center;
 }
@@ -47,4 +52,7 @@ span {
 }
 .m-b-md {
     margin-bottom: 30px;
+}
+.nav-tabs {
+    border: none;
 }
