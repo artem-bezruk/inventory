@@ -1,0 +1,58 @@
+html, body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Source Sans Pro';
+    height: 100vh;
+    margin: 0;
+}
+span {
+    background: rgb(0,0,0);
+    background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,64,255,0.8071603641456583) 100%);
+    background: -o-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,64,255,0.8071603641456583) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,64,255,0.8071603641456583) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    height: 200vh;
+}
+.full-height {
+    height: 100vh;
+}
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.position-ref {
+    position: relative;
+}
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+.top-left {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+}
+.content {
+    text-align: center;
+}
+.title {
+    font-size: 84px;
+}
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.m-b-md {
+    margin-bottom: 30px;
+}
+.nav-tabs {
+    border: none;
+}

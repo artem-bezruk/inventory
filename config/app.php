@@ -6,7 +6,7 @@ return [
     'debug' => (bool) env('APP_DEBUG', false),
     'url' => env('APP_URL', 'http:
     'asset_url' => env('ASSET_URL', null),
-    'timezone' => 'UTC',
+    'timezone' => 'America/Caracas',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
