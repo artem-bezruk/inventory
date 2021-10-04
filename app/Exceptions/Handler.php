@@ -16,12 +16,6 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $exception)
     {
-        $languages = [ "en", "es" ];
-        $lang = $request->segment(1);
-        if (!in_array($lang, $languages)) {
-            $lang = app()->getLocale();
-        }
-        app()->setLocale($lang);
         return parent::render($request, $exception);
     }
 }
