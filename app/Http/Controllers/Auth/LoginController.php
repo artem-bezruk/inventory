@@ -19,11 +19,42 @@ class LoginController extends Controller
     {
         return route('dashboard', ['locale' => app()->getLocale()]);
     }
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
+        }
+        $this->incrementLoginAttempts($request);
+        return $this->sendFailedLoginResponse($request);
+    }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'correo' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+    protected function credentials(Request $request)
+    {
+        return $request->only('correo', 'password');
+    }
     public function logout (Request $request)
     {
         $this->guard()->logout();
-        $request->session()->flush();
-        $request->session()->regenerate();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect(route('home', ['locale' => app()->getLocale()]));
     }
 }

@@ -23,16 +23,27 @@
 			</div>
 			<div class="card-body login-card-body" style="padding-top: 5px;">
 				<p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
+				@if ($errors->any())
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>
+			                	<span class="text-danger" role="alert">
+	                                <strong>{{ __($error) }}</strong>
+	                            </span>
+			            	</li>
+			            @endforeach
+			        </ul>
+				@endif
 				<form method="POST" action="{{ route('login', ['locale' => app()->getLocale()]) }}">
 					@csrf
 					<div class="input-group mb-3">
-						<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+						<input id="correo" type="email" class="form-control @error('correo') is-invalid @enderror" placeholder="{{ __('E-Mail Address') }}" name="correo" value="{{ old('correo') }}" required autocomplete="email" autofocus>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-envelope"></span>
 							</div>
 						</div>
-						@error('email')
+						@error('correo')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ __('auth.failed') }}</strong>
                             </span>

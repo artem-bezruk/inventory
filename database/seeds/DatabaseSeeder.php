@@ -4,5 +4,25 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+    	if (app()->environment() == 'production') {
+    		$this->call([
+	        	EstatusSeeder::class,
+	        	GenerosSeeder::class,
+	        	RolesSeeder::class,
+	        	ModulosSeeder::class,
+	        	ModulosHasRolesSeeder::class,
+	        	UsersSeeder::class,
+	        ]);
+    	}
+    	else {
+    		$this->call([
+	        	EstatusSeeder::class,
+	        	GenerosSeeder::class,
+	        	RolesSeeder::class,
+	        	ModulosSeeder::class,
+	        	ModulosHasRolesSeeder::class,
+	        	UsersSeeder::class,
+	        ]);
+    	}
     }
 }
