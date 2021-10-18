@@ -17,7 +17,7 @@
         @if (Route::has('login'))
             <div class="top-right links">
                 @auth
-                    <a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}">Dashboard</a>
+                    <a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}">{{ __('Dashboard') }}</a>
                 @else
                     <a href="{{ route('login', ['locale' => app()->getLocale()]) }}">{{ __('Login') }}</a>
                     @if (Route::has('register'))
@@ -35,11 +35,11 @@
 					<div class="dropdown-menu dropdown-menu-right p-0">
 						<a class="dropdown-item" href="{{ route($route, ['locale' => 'en']) }}">
 							<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
-							Ingles
+							{{ __('English') }}
 						</a>
 						<a class="dropdown-item" href="{{ route($route, ['locale' => 'es']) }}">
 							<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
-							Español
+							{{ __('Spanish') }}
 						</a>
 					</div>
 				</li>
@@ -49,6 +49,9 @@
             <div class="title m-b-md">
             	<img src="{{ asset('img/icon200x200.png') }}" alt="">
             	<span>Inventaris</span>
+            	@if (App::environment() != "production")
+            		V{{ config('app.version') }}
+            	@endif
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            'correo' => 'required|string',
+            $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
     }
@@ -49,6 +49,10 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         return $request->only('correo', 'password');
+    }
+    public function username()
+    {
+        return 'correo';
     }
     public function logout (Request $request)
     {

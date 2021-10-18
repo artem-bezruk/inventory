@@ -15,11 +15,11 @@
 		<div class="dropdown-menu dropdown-menu-right p-0">
 			<a class="dropdown-item" href="{{ route($route, ['locale' => 'en']) }}">
 				<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
-				Ingles
+				{{ __('English') }}
 			</a>
 			<a class="dropdown-item" href="{{ route($route, ['locale' => 'es']) }}">
 				<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
-				Español
+				{{ __('Spanish') }}
 			</a>
 		</div>
 	</li>
@@ -37,7 +37,7 @@
 				</p>
 			</li>
 			<li class="user-footer">
-				<a href="#" class="btn btn-default btn-flat">Profile</a>
+				<a href="#" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
 				<a class="btn btn-default btn-flat float-right"
                    onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">

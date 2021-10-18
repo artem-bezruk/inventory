@@ -28,9 +28,14 @@
     "If you did not receive the email": "Si no has recibido el email",
     "click here to request another": "pulsa aquí para que te enviemos otro",
     "Sign in to start your session": "Accede para comenzar tu sesión",
-    "404 Page not found": "404 Pagina no encontrada",
-    "We could not find the page you were looking for.": "No pudimos encontrar la pagina que buscabas",
-    "Oops! Something went wrong.": "¡Ups! Algo salio mal.",
+    "404 Page not found": "404 Página no encontrada",
+    "We could not find the page you were looking for.": "No pudimos encontrar la página que buscabas.",
+    "Oops! Something went wrong.": "¡Ups! Algo salió mal.",
     "Go home": "Ir al Inicio",
-    "Home": "Inicio"
+    "Home": "Inicio",
+    "Version": "Versión",
+    "Dashboard": "Tablero",
+    "Profile": "Perfil",
+    "English": "Inglés",
+    "Spanish": "Español"
 }
