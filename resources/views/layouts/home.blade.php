@@ -35,11 +35,11 @@
 					<div class="dropdown-menu dropdown-menu-right p-0">
 						<a class="dropdown-item" href="{{ route($route, ['locale' => 'en']) }}">
 							<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
-							{{ __('English') }}
+							<span class="text-language">{{ __('English') }}</span>
 						</a>
 						<a class="dropdown-item" href="{{ route($route, ['locale' => 'es']) }}">
 							<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
-							{{ __('Spanish') }}
+							<span class="text-language">{{ __('Spanish') }}</span>
 						</a>
 					</div>
 				</li>
@@ -47,10 +47,10 @@
 		</div>
         <div class="content">
             <div class="title m-b-md">
-            	<img src="{{ asset('img/icon200x200.png') }}" alt="">
-            	<span>Inventaris</span>
+            	<img src="{{ asset('img/icon200x200.png') }}" alt="Logo">
+            	<span class="titulo-app">{{ config('app.name') }}</span>
             	@if (App::environment() != "production")
-            		V{{ config('app.version') }}
+            		<span class="text-version text-monospace">v{{ config('app.version') }}</span>
             	@endif
             </div>
         </div>

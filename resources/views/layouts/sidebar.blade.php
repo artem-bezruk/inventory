@@ -1,6 +1,6 @@
 <a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}" class="brand-link">
 	<img src="{{ asset('img/icon200x200.png') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8; background-color: white;">
-	<span class="brand-text font-weight-light">Inventaris</span>
+	<span class="brand-text font-weight-light">{{ config('app.name') }}</span>
 </a>
 <div class="sidebar">
 	<nav class="mt-2">

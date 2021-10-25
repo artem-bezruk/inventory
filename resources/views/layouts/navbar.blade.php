@@ -2,6 +2,9 @@
 	<li class="nav-item">
 		<a class="nav-link btn" data-widget="pushmenu"><i class="fas fa-bars"></i></a>
 	</li>
+	<li class="nav-item d-none d-sm-inline-block">
+		<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="nav-link">{{ __('Home') }}</a>
+	</li>
 </ul>
 <ul class="navbar-nav ml-auto">
 	@php
@@ -15,11 +18,11 @@
 		<div class="dropdown-menu dropdown-menu-right p-0">
 			<a class="dropdown-item" href="{{ route($route, ['locale' => 'en']) }}">
 				<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
-				{{ __('English') }}
+				<span class="text-language">{{ __('English') }}</span>
 			</a>
 			<a class="dropdown-item" href="{{ route($route, ['locale' => 'es']) }}">
 				<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
-				{{ __('Spanish') }}
+				<span class="text-language">{{ __('Spanish') }}</span>
 			</a>
 		</div>
 	</li>
@@ -38,11 +41,9 @@
 			</li>
 			<li class="user-footer">
 				<a href="#" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
-				<a class="btn btn-default btn-flat float-right"
-                   onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
+				<a class="btn btn-default btn-flat float-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+					{{ __('Logout') }}
+				</a>
                 <form id="logout-form" action="{{ route('logout', ['locale' => app()->getLocale()]) }}" method="POST" style="display: none;">
                     @csrf
                 </form>
