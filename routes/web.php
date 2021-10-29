@@ -10,5 +10,6 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 	Route::post('login', 'Auth\LoginController@login');
 	Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-	require "dashboard/WebRoutes.php";
+	require "dashboard/DashboardWebRoutes.php";
+	require "configuration/ConfigurationWebRoutes.php";
 });

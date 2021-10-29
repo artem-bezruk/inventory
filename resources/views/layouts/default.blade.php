@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="{{ asset('img/icon70x70.png') }}">
-	<title>{{ config('app.name') }} - @yield('title')</title>
-	@yield('css-main')
+	<title>{{ config('app.name') }} - @yield('tab-title')</title>
+	@yield('main-css')
 </head>
 <body class="hold-transition pace-primary">
-	@yield('content-main')
-	@yield('js-main')
+	@yield('main-content')
+	@yield('main-js')
 </body>
 </html>

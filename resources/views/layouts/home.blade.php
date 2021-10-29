@@ -1,6 +1,6 @@
 @extends('layouts.default')
-@section('title', __('Home'))
-@section('css-main')
+@section('tab-title', __('Home'))
+@section('main-css')
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
-@section('content-main')
+@section('main-content')
 	@php
 		$lang = config('app.locale');
 		$route = Route::currentRouteName();
@@ -48,7 +48,7 @@
         <div class="content">
             <div class="title m-b-md">
             	<img src="{{ asset('img/icon200x200.png') }}" alt="Logo">
-            	<span class="titulo-app">{{ config('app.name') }}</span>
+            	<span class="title-app">{{ config('app.name') }}</span>
             	@if (App::environment() != "production")
             		<span class="text-version text-monospace">v{{ config('app.version') }}</span>
             	@endif
@@ -56,7 +56,7 @@
         </div>
     </div>
 @endsection
-@section('js-main')
+@section('main-js')
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>

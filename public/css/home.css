@@ -5,7 +5,7 @@ html, body {
     height: 100vh;
     margin: 0;
 }
-.titulo-app {
+.title-app {
     background: rgb(0,0,0);
     background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,64,255,0.8071603641456583) 100%);
     background: -o-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,64,255,0.8071603641456583) 100%);

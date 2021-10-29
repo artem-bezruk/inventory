@@ -11,6 +11,12 @@
 					<p>{{ __('Dashboard') }}</p>
 				</a>
 			</li>
+			<li class="nav-item">
+				<a href="{{ route('config.index', ['locale' => app()->getLocale()]) }}" class="nav-link">
+					<i class="nav-icon fas fa-cog"></i>
+					<p>{{ __('Configurations') }}</p>
+				</a>
+			</li>
 		</ul>
 	</nav>
 </div>

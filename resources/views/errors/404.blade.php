@@ -1,6 +1,6 @@
 @extends('layouts.default')
-@section('title', __('404 Page not found'))
-@section('css-main')
+@section('tab-title', __('404 Page not found'))
+@section('main-css')
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
-@section('content-main')
+@section('main-content')
 	<div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
@@ -24,7 +24,7 @@
         </div>
     </div>
 @endsection
-@section('js-main')
+@section('main-js')
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>

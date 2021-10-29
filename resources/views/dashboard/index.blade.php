@@ -1,4 +1,5 @@
 @extends('layouts.base')
-@section('title', 'Dashboard')
+@section('tab-title', __('Dashboard'))
+@section('breadcrumb-title', __('DashBoard'))
 @section('content')
 @endsection

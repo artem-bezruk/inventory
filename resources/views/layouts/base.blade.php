@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('css-main')
+@section('main-css')
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	@yield('css')
 @endsection
-@section('content-main')
+@section('main-content')
 	<div class="wrapper">
 		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 			@include('layouts.navbar')
@@ -34,7 +34,7 @@
 		</footer>
 	</div>
 @endsection
-@section('js-main')
+@section('main-js')
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 	<script>
