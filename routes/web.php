@@ -12,4 +12,5 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 	require "dashboard/DashboardWebRoutes.php";
 	require "configuration/ConfigurationWebRoutes.php";
+	require "user/UserWebRoutes.php";
 });
