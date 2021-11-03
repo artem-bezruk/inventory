@@ -18,6 +18,12 @@
 				</a>
 			</li>
 			<li class="nav-item">
+				<a href="{{ route('bitacora', ['locale' => app()->getLocale()]) }}" class="nav-link">
+					<i class="nav-icon fas fa-clipboard-list"></i>
+					<p>{{ __('Binnacle') }}</p>
+				</a>
+			</li>
+			<li class="nav-item">
 				<a href="{{ route('config.index', ['locale' => app()->getLocale()]) }}" class="nav-link">
 					<i class="nav-icon fas fa-cog"></i>
 					<p>{{ __('Configurations') }}</p>
