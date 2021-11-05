@@ -14,4 +14,5 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	require "configuration/ConfigurationWebRoutes.php";
 	require "user/UserWebRoutes.php";
 	require "bitacora/BitacoraWebRoutes.php";
+	require "configuration/ClaseWebRoutes.php";
 });
