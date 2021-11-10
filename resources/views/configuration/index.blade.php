@@ -38,6 +38,21 @@
 				</a>
 			</div>
 		</div>
+		<div class="col-lg-3 col-6">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Categories') }}</h3>
+	                <span class="info-box-number"></span>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('categoria.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
 	</div>
 @endsection
 @section('script')

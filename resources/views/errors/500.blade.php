@@ -19,7 +19,7 @@
             	<p class="text-monospace">{{ __('Oops! Something went wrong.') }}</p>
             </div>
         	<div>
-        		<a href="/" class="btn btn-danger" role="button">{{ __('Go home') }}</a>
+        		<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="btn btn-danger" role="button">{{ __('Go home') }}</a>
 	        </div>
         </div>
     </div>
