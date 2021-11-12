@@ -17,4 +17,5 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	require "configuration/ClaseWebRoutes.php";
 	require "configuration/SubclaseWebRoutes.php";
 	require "configuration/CategoriaWebRoutes.php";
+	require "configuration/SubcategoriaWebRoutes.php";
 });
