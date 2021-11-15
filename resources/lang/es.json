@@ -44,5 +44,8 @@
     "Go": "Ir",
     "Classes": "Clases",
     "Subclasses": "Subclases",
-    "Categories": "Categorías"
+    "Categories": "Categorías",
+    "Subcategories": "Subcategorías",
+    "Referential": "Referenciales",
+    "Marks": "Marcas"
 }
