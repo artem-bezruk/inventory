@@ -7,13 +7,11 @@
 	<li class="breadcrumb-item active">{{ __('Configurations') }}</li>
 @endsection
 @section('content')
-	<h4 class="mb-3">{{ __('Referential') }}</h4>
 	<div class="row">
 		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
 			<div class="small-box bg-info">
 				<div class="inner">
 					<h3>{{ __('Classes') }}</h3>
-	                <span class="info-box-number"></span>
 				</div>
 				<div class="icon">
 					<i class="fas fa-cubes"></i>
@@ -28,7 +26,6 @@
 			<div class="small-box bg-info">
 				<div class="inner">
 					<h3>{{ __('Subclasses') }}</h3>
-	                <span class="info-box-number"></span>
 				</div>
 				<div class="icon">
 					<i class="fas fa-cubes"></i>
@@ -43,7 +40,6 @@
 			<div class="small-box bg-info">
 				<div class="inner">
 					<h3>{{ __('Categories') }}</h3>
-	                <span class="info-box-number"></span>
 				</div>
 				<div class="icon">
 					<i class="fas fa-cubes"></i>
@@ -58,7 +54,6 @@
 			<div class="small-box bg-info">
 				<div class="inner">
 					<h3>{{ __('Subcategories') }}</h3>
-	                <span class="info-box-number"></span>
 				</div>
 				<div class="icon">
 					<i class="fas fa-cubes"></i>
@@ -75,12 +70,128 @@
 			<div class="small-box bg-info">
 				<div class="inner">
 					<h3>{{ __('Marks') }}</h3>
-	                <span class="info-box-number"></span>
 				</div>
 				<div class="icon">
 					<i class="fas fa-cubes"></i>
 				</div>
 				<a href="{{ route('marca.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Capacities') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('capacidad.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Status') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('estatu.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Genders') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-venus-mars"></i>
+				</div>
+				<a href="{{ route('genero.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Modules') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('modulo.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Nomenclatures') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('nomenclatura.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Roles') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('rol.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Modules') }} {{ __('by') }} {{ __('Roles') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('modulorol.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<span>{{ __('Go') }}</span>
+					<i class="fas fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-sm-6 col-md-6 col-lg-3">
+			<div class="small-box bg-info">
+				<div class="inner">
+					<h3>{{ __('Marks') }} {{ __('by') }}</h3>
+					<h3>{{ __('Subcategories') }}</h3>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cubes"></i>
+				</div>
+				<a href="{{ route('marcasubcategoria.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
 					<span>{{ __('Go') }}</span>
 					<i class="fas fa-arrow-circle-right"></i>
 				</a>

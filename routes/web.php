@@ -19,4 +19,13 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	require "configuration/CategoriaWebRoutes.php";
 	require "configuration/SubcategoriaWebRoutes.php";
 	require "configuration/MarcaWebRoutes.php";
+	require "configuration/CapacidadWebRoutes.php";
+	require "configuration/EstatuWebRoutes.php";
+	require "configuration/GeneroWebRoutes.php";
+	require "configuration/ModuloWebRoutes.php";
+	require "configuration/NomenclaturaWebRoutes.php";
+	require "configuration/RolWebRoutes.php";
+	require "configuration/MarcaSubcategoriaWebRoutes.php";
+	require "configuration/ModuloRolWebRoutes.php";
+	require "bien/BienWebRoutes.php";
 });

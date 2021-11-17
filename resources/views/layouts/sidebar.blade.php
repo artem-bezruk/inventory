@@ -12,6 +12,12 @@
 				</a>
 			</li>
 			<li class="nav-item">
+				<a href="{{ route('bien.index', ['locale' => app()->getLocale()]) }}" class="nav-link">
+					<i class="nav-icon fa fa-desktop"></i>
+					<p>{{ __('Properties') }}</p>
+				</a>
+			</li>
+			<li class="nav-item">
 				<a href="{{ route('user.index', ['locale' => app()->getLocale()]) }}" class="nav-link">
 					<i class="nav-icon fas fa-users"></i>
 					<p>{{ __('Users') }}</p>
@@ -25,7 +31,7 @@
 			</li>
 			<li class="nav-item">
 				<a href="{{ route('config.index', ['locale' => app()->getLocale()]) }}" class="nav-link">
-					<i class="nav-icon fas fa-cog"></i>
+					<i class="nav-icon fas fa-cogs"></i>
 					<p>{{ __('Configurations') }}</p>
 				</a>
 			</li>

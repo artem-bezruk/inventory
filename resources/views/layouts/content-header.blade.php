@@ -5,9 +5,13 @@
 		</div>
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
-				<li class="breadcrumb-item">
-					<a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}">{{ __('Dashboard') }}</a>
-				</li>
+				@if (Route::currentRouteName() == 'dashboard')
+					<li class="breadcrum-item active">{{ __('Dashboard') }}</li>
+				@else
+					<li class="breadcrumb-item">
+						<a href="{{ route('dashboard', ['locale' => app()->getLocale()]) }}">{{ __('Dashboard') }}</a>
+					</li>
+				@endif
 				@yield('breadcrumb')
 			</ol>
 		</div>
