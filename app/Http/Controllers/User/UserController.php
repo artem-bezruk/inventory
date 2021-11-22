@@ -30,4 +30,8 @@ class UserController extends Controller
     public function destroy($id)
     {
     }
+    public function profile ($id)
+    {
+        return view('user.perfil');
+    }
 }

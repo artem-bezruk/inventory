@@ -5,7 +5,7 @@ Route::get('/', function () {
 });
 Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'middleware' => 'language' ], function () {
 	Route::get('/home', function () {
-		return view('layouts.home');
+		return view('home.index');
 	})->name('home');
 	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 	Route::post('login', 'Auth\LoginController@login');

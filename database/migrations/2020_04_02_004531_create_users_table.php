@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('rol_id');
             $table->string('username', 45)->unique();
             $table->string('password', 255);
+            $table->rememberToken();
             $table->timestamp('fecha_registro');
             $table->timestamp('fecha_modificacion')->nullable();
             $table->foreign('genero_id')->references('id')->on('generos');

@@ -26,13 +26,13 @@
 				<form method="POST" action="{{ route('login', ['locale' => app()->getLocale()]) }}">
 					@csrf
 					<div class="input-group mb-3">
-						<input id="correo" type="email" class="form-control @error('correo') is-invalid @enderror" placeholder="{{ __('E-Mail Address') }}" name="correo" value="{{ old('correo') }}" required autocomplete="email" autofocus>
+						<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="{{ __('Username') }}" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 						<div class="input-group-append">
 							<div class="input-group-text">
-								<span class="fas fa-envelope"></span>
+								<span class="fas fa-user"></span>
 							</div>
 						</div>
-						@error('correo')
+						@error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ __('auth.failed') }}</strong>
                             </span>

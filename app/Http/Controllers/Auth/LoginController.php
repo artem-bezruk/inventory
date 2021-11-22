@@ -13,7 +13,7 @@ class LoginController extends Controller
     }
     public function showLoginForm()
     {
-        return view('layouts.login');
+        return view('login.index');
     }
     public function redirectTo()
     {
@@ -48,11 +48,11 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
-        return $request->only('correo', 'password');
+        return $request->only('username', 'password');
     }
     public function username()
     {
-        return 'correo';
+        return 'username';
     }
     public function logout (Request $request)
     {

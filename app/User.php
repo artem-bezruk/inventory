@@ -7,9 +7,10 @@ class User extends Authenticatable
 {
     use Notifiable;
     protected $fillable = [
-        'nombre', 'apellido', 'cedula', 'correo', 'password',
+        'nombre', 'apellido', 'cedula',  'genero_id', 'correo', 'estatus_id', 'rol_id', 'username', 'password', 'fecha_registro',
     ];
     protected $hidden = [
         'password'
     ];
+    public $timestamps = false;
 }
