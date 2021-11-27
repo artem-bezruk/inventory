@@ -13,4 +13,8 @@ class User extends Authenticatable
         'password'
     ];
     public $timestamps = false;
+    public function rol ()
+    {
+        return $this->belongsTo('App\Rol', 'id');
+    }
 }

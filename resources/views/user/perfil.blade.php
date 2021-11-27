@@ -15,7 +15,7 @@
 						<img class="profile-user-img img-fluid img-circle" src="{{ asset('img/user3-128x128.jpg') }}" alt="User profile picture">
 					</div>
 					<h3 class="profile-username text-center">{{ ucfirst(auth()->user()->nombre) }} {{ ucfirst(auth()->user()->apellido) }}</h3>
-					<p class="text-muted text-center">Software Engineer</p>
+					<p class="text-muted text-center">{{ auth()->user()->rol()->first()->rol }}</p>
 				</div>
 			</div>
 		</div>
