@@ -7,18 +7,18 @@ class RolesSeeder extends Seeder
     {
         $roles = [
         	(object) [
-        		'rol' => 'Administrador',
-        		'descripcion' => 'Administrador',
+        		'rol' => 'Administrator',
+        		'descripcion' => 'Person to charge of System',
         		'prioridad' => 0
         	],
         	(object) [
-        		'rol' => 'Encargado',
-        		'descripcion' => 'Persona a cargo del almacen',
+        		'rol' => 'Attendant',
+        		'descripcion' => 'Person to charge of Warehouse',
         		'prioridad' => 1
         	],
         	(object) [
-        		'rol' => 'Operador',
-        		'descripcion' => 'Persona encargada de ejecutar las tareas en el almacen',
+        		'rol' => 'Operator',
+        		'descripcion' => 'Person in charge to execute the tasks on the Warehouse',
         		'prioridad' => 2
         	],
         ];

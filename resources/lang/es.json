@@ -55,5 +55,12 @@
     "Nomenclatures": "Nomenclaturas",
     "Roles": "Roles",
     "by": "por",
-    "Properties": "Bienes"
+    "Properties": "Bienes",
+    "Information": "Información",
+    "Administrator": "Administrador",
+    "Person to charge of System": "Persona a cargo del Sistema",
+    "Attendant": "Encargado",
+    "Person to charge of Warehouse": "Persona a cargo del Almacén",
+    "Operator": "Operador",
+    "Person in charge to execute the tasks on the Warehouse": "Persona encargada de ejecutar las tareas en el Almacén"
 }

@@ -28,13 +28,13 @@
 	<li class="nav-item dropdown user-menu">
 		<a class="nav-link dropdown-toggle btn" data-toggle="dropdown">
 			<img src="{{ asset('img/user3-128x128.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">
-			<span class="d-none d-md-inline">{{ ucfirst(auth()->user()->nombre) }} {{ ucfirst(auth()->user()->apellido) }}</span>
+			<span class="d-none d-md-inline">{{ ucwords(auth()->user()->nombre) }} {{ ucwords(auth()->user()->apellido) }}</span>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 			<li class="user-header bg-primary">
 				<img src="{{ asset('img/user3-128x128.jpg') }}" class="img-circle elevation-2" alt="User Image">
 				<p>
-					{{ ucfirst(auth()->user()->nombre) }} {{ ucfirst(auth()->user()->apellido) }} - {{ auth()->user()->rol()->first()->rol }}
+					{{ ucwords(auth()->user()->nombre) }} {{ ucwords(auth()->user()->apellido) }} - {{ __(auth()->user()->rol()->first()->rol) }}
 				</p>
 			</li>
 			<li class="user-footer">

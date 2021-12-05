@@ -19,6 +19,28 @@ class UsersSeeder extends Seeder
         		'password' => Hash::make('admins'),
         		'fecha_registro' => $fecha
         	],
+            (object) [
+                'nombre' => 'attendant',
+                'apellido' => 'system',
+                'genero' => 1,
+                'correo' => 'atteninventario@gmail.com',
+                'estatus' => 1,
+                'rol' => 2,
+                'username' => 'atten',
+                'password' => Hash::make('attens'),
+                'fecha_registro' => $fecha
+            ],
+            (object) [
+                'nombre' => 'operator',
+                'apellido' => 'system',
+                'genero' => 1,
+                'correo' => 'operatorinventario@gmail.com',
+                'estatus' => 1,
+                'rol' => 3,
+                'username' => 'operator',
+                'password' => Hash::make('operators'),
+                'fecha_registro' => $fecha
+            ],
         ];
         foreach ($users as $user) {
         	DB::table('users')->insert([
