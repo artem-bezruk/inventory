@@ -61,7 +61,7 @@
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>
-	<script>
-		$('body').addClass('lockscreen')
+	<script type="text/javascript">
+		$('body').addClass('lockscreen');
 	</script>
 @endsection

@@ -80,7 +80,7 @@
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>
-	<script>
-		$('body').addClass('login-page')
+	<script type="text/javascript">
+		$('body').addClass('login-page');
 	</script>
 @endsection

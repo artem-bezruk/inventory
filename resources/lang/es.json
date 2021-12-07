@@ -62,5 +62,6 @@
     "Attendant": "Encargado",
     "Person to charge of Warehouse": "Persona a cargo del Almacén",
     "Operator": "Operador",
-    "Person in charge to execute the tasks on the Warehouse": "Persona encargada de ejecutar las tareas en el Almacén"
+    "Person in charge to execute the tasks on the Warehouse": "Persona encargada de ejecutar las tareas en el Almacén",
+    "You don't have the permissions necessary to access": "No tienes los permisos necesarios para acceder"
 }
