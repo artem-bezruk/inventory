@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 	return redirect(app()->getLocale() . '/home');
 });
-Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'middleware' => 'language' ], function () {
+Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'middleware' => ['language', 'sidebar'] ], function () {
 	Route::get('/home', function () {
 		return view('home.index');
 	})->name('home');

@@ -1,4 +1,4 @@
 <?php
 static $uri = 'configurations/estatus'; 
 static $controller = 'Configuration\EstatuController@'; 
-Route::get($uri, $controller . 'index')->name('estatu.index');
+Route::get($uri, $controller . 'index')->name('estatu.index')->middleware('checkRol:estatus,r');

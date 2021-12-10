@@ -7,12 +7,9 @@
 	</li>
 </ul>
 <ul class="navbar-nav ml-auto">
-	@php
-		$lang = config('app.locale');
-	@endphp
 	<li class="nav-item dropdown">
 		<a class="nav-link" data-toggle="dropdown">
-			<img src="{{ asset('img/' . $lang . '.png') }}" alt="en" width="30" height="30">
+			<img src="{{ asset('img/' . app()->getLocale() . '.png') }}" alt="en" width="30" height="30">
 		</a>
 		<div class="dropdown-menu dropdown-menu-right p-0">
 			<a class="dropdown-item" href="{{ route('dashboard', ['locale' => 'en']) }}">

@@ -18,7 +18,19 @@ class CheckRole
             "mensaje" => __('You don\'t have the permissions necessary to access')
         ];
         foreach ($prioridades as $prioridad) {
+            if ($prioridad == "c" && $permisos->create == false) {
+                session()->flash('alerta', $mensaje);
+                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+            }
             if ($prioridad == "r" && $permisos->read == false) {
+                session()->flash('alerta', $mensaje);
+                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+            }
+            if ($prioridad == "u" && $permisos->update == false) {
+                session()->flash('alerta', $mensaje);
+                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+            }
+            if ($prioridad == "d" && $permisos->delete == false) {
                 session()->flash('alerta', $mensaje);
                 return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
             }

@@ -20,8 +20,10 @@ class ModulosSeeder extends Seeder
         	'roles',
         	'bienes',
         	'users',
+            'users_perfil',
         	'marcas_has_categorias',
         	'modulos_has_roles',
+            'configuraciones'
         ];
         foreach ($modulos as $value) {
         	DB::table('modulos')->insert([

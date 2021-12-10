@@ -1,4 +1,4 @@
 <?php
 static $uri = 'configurations/genders'; 
 static $controller = 'Configuration\GeneroController@'; 
-Route::get($uri, $controller . 'index')->name('genero.index');
+Route::get($uri, $controller . 'index')->name('genero.index')->middleware('checkRol:generos,r');

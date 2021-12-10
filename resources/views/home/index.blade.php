@@ -9,10 +9,6 @@
 	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('main-content')
-	@php
-		$lang = config('app.locale');
-		$route = Route::currentRouteName();
-	@endphp
 	<div class="flex-center position-ref full-height">
         @if (Route::has('login'))
             <div class="top-right links">
@@ -30,14 +26,14 @@
 			<ul class="nav nav-tabs">
 				<li class="nav-item dropdown">
 					<a class="nav-link" data-toggle="dropdown">
-						<img src="{{ asset('img/' . $lang . '.png') }}" alt="en" width="30" height="30">
+						<img src="{{ asset('img/' . app()->getLocale() . '.png') }}" alt="en" width="30" height="30">
 					</a>
 					<div class="dropdown-menu dropdown-menu-right p-0">
-						<a class="dropdown-item" href="{{ route($route, ['locale' => 'en']) }}">
+						<a class="dropdown-item" href="{{ route('home', ['locale' => 'en']) }}">
 							<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
 							<span class="text-language">{{ __('English') }}</span>
 						</a>
-						<a class="dropdown-item" href="{{ route($route, ['locale' => 'es']) }}">
+						<a class="dropdown-item" href="{{ route('home', ['locale' => 'es']) }}">
 							<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
 							<span class="text-language">{{ __('Spanish') }}</span>
 						</a>
@@ -49,7 +45,7 @@
             <div class="title m-b-md">
             	<img src="{{ asset('img/icon200x200.png') }}" alt="Logo">
             	<span class="title-app">{{ config('app.name') }}</span>
-            	@if (App::environment() != "production")
+            	@if (!App::environment('production'))
             		<span class="text-version text-monospace">v{{ config('app.version') }}</span>
             	@endif
             </div>

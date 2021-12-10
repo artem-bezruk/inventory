@@ -1,4 +1,4 @@
 <?php
 static $uri = 'configurations/capacities'; 
 static $controller = 'Configuration\CapacidadController@'; 
-Route::get($uri, $controller . 'index')->name('capacidad.index');
+Route::get($uri, $controller . 'index')->name('capacidad.index')->middleware('checkRol:capacidades,r');

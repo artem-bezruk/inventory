@@ -27,6 +27,8 @@ class ModulosHasRolesSeeder extends Seeder
     		14,
     		15,
     		16,
+            17,
+            18,
     	];
     	$create = true;
     	$read = true;
@@ -56,7 +58,7 @@ class ModulosHasRolesSeeder extends Seeder
 			    				'delete' => $delete,
 			    			]);
 		    			}
-		    			else if ($modulo == 14) {
+		    			else if ($modulo == 15) {
 			    			DB::table('modulos_has_roles')->insert([
 			    				'modulo_id' => $modulo,
 			    				'rol_id' => $rol,
@@ -80,7 +82,7 @@ class ModulosHasRolesSeeder extends Seeder
 			    				'update' => $update,
 			    			]);
 		    			}
-		    			else if ($modulo == 14) {
+		    			else if ($modulo == 15) {
 			    			DB::table('modulos_has_roles')->insert([
 			    				'modulo_id' => $modulo,
 			    				'rol_id' => $rol,

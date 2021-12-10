@@ -1,4 +1,4 @@
 <?php
 static $uri = 'configurations/roles'; 
 static $controller = 'Configuration\RolController@'; 
-Route::get($uri, $controller . 'index')->name('rol.index');
+Route::get($uri, $controller . 'index')->name('rol.index')->middleware('checkRol:roles,r');
