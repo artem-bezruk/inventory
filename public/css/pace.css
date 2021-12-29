@@ -1,0 +1,3 @@
+.pace-running > *:not(.pace) {
+	display: none;
+}

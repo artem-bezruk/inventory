@@ -1,6 +1,7 @@
 @extends('layouts.default')
 @section('tab-title', __('Login'))
 @section('main-css')
+	<link rel="stylesheet" href="{{ asset('css/pace.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">

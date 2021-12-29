@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('main-css')
+	<link rel="stylesheet" href="{{ asset('css/pace.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/pace-progress/themes/blue/pace-theme-center-radar.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
