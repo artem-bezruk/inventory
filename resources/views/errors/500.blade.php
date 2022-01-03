@@ -16,7 +16,7 @@
             	<span>500</span>
             </div>
             <div>
-            	<p class="text-monospace">{{ __('Oops! Something went wrong.') }}</p>
+            	<p class="text-monospace">{{ __('Oops! Something went wrong') }}.</p>
             </div>
         	<div>
         		<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="btn btn-danger" role="button">{{ __('Go home') }}</a>

@@ -6,8 +6,8 @@ class EstatusSeeder extends Seeder
     public function run()
     {
         $estatus = [
-        	'Activo',
-        	'Inactivo'
+        	'Active',
+        	'Inactive'
         ];
         foreach ($estatus as $value) {
         	DB::table('estatus')->insert([

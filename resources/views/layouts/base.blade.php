@@ -47,7 +47,7 @@
 	<script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 	<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('js/alert.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('js/general.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('body').addClass('sidebar-mini layout-fixed');
 		var data = @json(session()->get('alerta'));

@@ -16,7 +16,7 @@
             	<span>400</span>
             </div>
             <div>
-            	<p class="text-monospace">{{ __('We could not find the page you were looking for.') }}</p>
+            	<p class="text-monospace">{{ __('We could not find the page you were looking for') }}.</p>
             </div>
         	<div>
         		<a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="btn btn-danger" role="button">{{ __('Go home') }}</a>
