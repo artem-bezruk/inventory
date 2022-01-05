@@ -17,7 +17,7 @@
 						<h3 class="card-title">{{ __('Users list') }}</h3>
 					</div>
 					<div class="text-right">
-						<button type="button" class="btn btn-primary"><i class="fas fa-user-plus"></i><span class="d-none d-md-inline">&nbsp;&nbsp;{{ __('Add') }}</span></button>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearuser"><i class="fas fa-user-plus"></i><span class="d-none d-md-inline">&nbsp;&nbsp;{{ __('Add') }}</span></button>
 					</div>
 				</div>
 				<div class="card-body">
@@ -42,6 +42,8 @@
 			</div>
 		</div>
 	</div>
+	@include('user.crear')
+	<div id="responseModal"></div>
 @endsection
 @section('script')
 	<script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
@@ -60,7 +62,8 @@
 			$.ajax({
 				type: 'GET',
 				url: url,
-				beforeSend: function () {
+				beforeSend: function ()
+				{
 					Swal.fire({
 						type: 'info',
 						title: "{{ __('Requesting information') }}",
@@ -70,7 +73,7 @@
 					})
 				}
 			})
-			.done(function (response = [], statusText, jqXHR) {
+			.done(function (response, statusText, jqXHR) {
 				if (jqXHR.status == 204) {
 					setTimeout(function () {
 						Swal.close();
@@ -100,7 +103,7 @@
 					response.data.forEach( function(element, index) {
 						divBotonOpen = '<div class="btn-group d-flex justify-content-center" role="group">';
 						divBotonClose = '</div>';
-						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}"><i class="far fa-eye"></i></button>';
+						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarUsuario(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
 						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}"><i class="far fa-edit"></i></button>';
 						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}"><i class="fas fa-trash-alt"></i></button>';
 						opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
@@ -120,6 +123,54 @@
 				$('#divTabla').hide();
 				$('#mensaje').text("{{ __('Oops! Something went wrong') }}");
 				$('#mensaje').addClass('text-danger');
+			});
+		}
+		function mostrarUsuario (url)
+		{
+			$.ajax({
+				type: 'GET',
+				url: url,
+				contentType: 'text/html',
+				cache: false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('No content to show') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						timer: 1700
+					})
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						$("#responseModal").html(response)
+						$("#mostraruser").modal("toggle")
+						Swal.close();
+					},700);
+				}
+			})
+			.fail(function (e) {
+				Swal.fire({
+					type: 'error',
+					title: "{{ __('Oops! Something went wrong') }}",
+					showConfirmButton: false,
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+					timer: 1700
+				})
 			});
 		}
 	</script>

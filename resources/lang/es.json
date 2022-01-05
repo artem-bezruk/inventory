@@ -1,5 +1,6 @@
 {
     "Username": "Nombre de Usuario",
+    "E-Mail Address": "Correo electrónico",
     "Password": "Contraseña",
     "Remember Me": "Recuérdame",
     "Login": "Acceder",
@@ -76,8 +77,12 @@
     "Inactive": "Inactivo",
     "Options": "Opciones",
     "Register Date": "Fecha de Registro",
+    "Update Date": "Fecha de Modificación",
     "Show": "Mostrar",
     "Edit": "Editar",
     "Delete": "Eliminar",
-    "Add": "Añadir"
+    "Add": "Añadir",
+    "User": "Usuario",
+    "Doesn't apply": "No aplica",
+    "Identity document": "Documento de identidad"
 }

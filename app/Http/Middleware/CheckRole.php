@@ -3,6 +3,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\ModuloByRol;
 use App\Modulo;
+use App\Enums\HttpStatus;
 class CheckRole
 {
     public function handle($request, Closure $next, $modulo, $prioridades)
@@ -13,24 +14,30 @@ class CheckRole
         $permisos = ModuloByRol::where('modulo_id', $modulo_id)
             ->where('rol_id', $rol_id)
             ->first();
+        $cumple = true;
         $mensaje = (object) [
             "tipo" => 'e',
             "mensaje" => __('You don\'t have the permissions necessary to access')
         ];
         foreach ($prioridades as $prioridad) {
             if ($prioridad == "c" && $permisos->create == false) {
-                session()->flash('alerta', $mensaje);
-                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+                $cumple = false;
             }
             if ($prioridad == "r" && $permisos->read == false) {
-                session()->flash('alerta', $mensaje);
-                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+                $cumple = false;
             }
             if ($prioridad == "u" && $permisos->update == false) {
-                session()->flash('alerta', $mensaje);
-                return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
+                $cumple = false;
             }
             if ($prioridad == "d" && $permisos->delete == false) {
+                $cumple = false;
+            }
+        }
+        if (!$cumple) {
+            if ($request->expectsJson()) {
+                return response()->json($mensaje, HttpStatus::FORBIDDEN);
+            }
+            else {
                 session()->flash('alerta', $mensaje);
                 return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
             }
