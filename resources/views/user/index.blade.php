@@ -42,7 +42,6 @@
 			</div>
 		</div>
 	</div>
-	@include('user.crear')
 	<div id="responseModal"></div>
 @endsection
 @section('script')
@@ -62,6 +61,8 @@
 			$.ajax({
 				type: 'GET',
 				url: url,
+				contentType: 'application/json',
+				cache:false,
 				beforeSend: function ()
 				{
 					Swal.fire({
@@ -104,7 +105,7 @@
 						divBotonOpen = '<div class="btn-group d-flex justify-content-center" role="group">';
 						divBotonClose = '</div>';
 						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarUsuario(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
-						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}"><i class="far fa-edit"></i></button>';
+						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}" onclick="editarUsuario(' + "'" + element.urlEditar + "'" + ')"><i class="far fa-edit"></i></button>';
 						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}"><i class="fas fa-trash-alt"></i></button>';
 						opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
 						element.opciones = opciones;
@@ -158,6 +159,54 @@
 					setTimeout(function () {
 						$("#responseModal").html(response)
 						$("#mostraruser").modal("toggle")
+						Swal.close();
+					},700);
+				}
+			})
+			.fail(function (e) {
+				Swal.fire({
+					type: 'error',
+					title: "{{ __('Oops! Something went wrong') }}",
+					showConfirmButton: false,
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+					timer: 1700
+				})
+			});
+		}
+		function editarUsuario (url)
+		{
+			$.ajax({
+				type: 'GET',
+				url: url,
+				contentType: 'text/html',
+				cache: false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('No content to show') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						timer: 1700
+					})
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						$("#responseModal").html(response)
+						$("#editaruser").modal("toggle")
 						Swal.close();
 					},700);
 				}

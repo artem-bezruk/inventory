@@ -6,3 +6,8 @@
 	text-align: right;
 	padding-right: 10px;
 }
+.required:after {
+	content: "*";
+	color: #FF0100;
+	margin-left: 2px;
+}

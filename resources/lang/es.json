@@ -84,5 +84,14 @@
     "Add": "Añadir",
     "User": "Usuario",
     "Doesn't apply": "No aplica",
-    "Identity document": "Documento de identidad"
+    "Identity document": "Documento de identidad",
+    "Personal Information": "Información Personal",
+    "User Information": "Información del Usuario",
+    "Choose": "Seleccione",
+    "Note": "Nota",
+    "The fields marked with": "Los campos marcados con",
+    "are required": "son requeridos",
+    "to change the respective data": "para cambiar los datos respectivos",
+    "or": "o",
+    "Nothing to update": "Nada que actualizar"
 }
