@@ -17,7 +17,7 @@
 						<h3 class="card-title">{{ __('Users list') }}</h3>
 					</div>
 					<div class="text-right">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearuser"><i class="fas fa-user-plus"></i><span class="d-none d-md-inline">&nbsp;&nbsp;{{ __('Add') }}</span></button>
+						<button type="button" class="btn btn-primary" onclick="crearUsuario()"><i class="fas fa-user-plus"></i><span class="d-none d-md-inline">&nbsp;&nbsp;{{ __('Add') }}</span></button>
 					</div>
 				</div>
 				<div class="card-body">
@@ -124,6 +124,54 @@
 				$('#divTabla').hide();
 				$('#mensaje').text("{{ __('Oops! Something went wrong') }}");
 				$('#mensaje').addClass('text-danger');
+			});
+		}
+		function crearUsuario ()
+		{
+			$.ajax({
+				type: 'GET',
+				url: "{{ route('user.create', ['locale' => app()->getLocale()]) }}",
+				contentType: 'text/html',
+				cache: false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('No content to show') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						timer: 1700
+					})
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						$("#responseModal").html(response)
+						$("#crearuser").modal("toggle")
+						Swal.close();
+					},700);
+				}
+			})
+			.fail(function (e) {
+				Swal.fire({
+					type: 'error',
+					title: "{{ __('Oops! Something went wrong') }}",
+					showConfirmButton: false,
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+					timer: 1700
+				})
 			});
 		}
 		function mostrarUsuario (url)

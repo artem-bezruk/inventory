@@ -48,7 +48,9 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
-        return $request->only('username', 'password');
+        $credentials = $request->only('username', 'password');
+        $credentials['estatus_id'] = 1;
+        return $credentials;
     }
     public function username()
     {

@@ -57,9 +57,14 @@ class UserController extends Controller
     }
     public function create()
     {
+        $this->respuesta["extras"] = (object) [
+            "generos" => \App\Genero::all(),
+        ];
+        return response()->view('user.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        return response()->json($request->all(), HttpStatus::Ok);
     }
     public function show($local, $id)
     {

@@ -129,14 +129,14 @@
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
-					<label for="contraseña">{{ __('Password') }}</label>
+					<label class="required" for="contraseña">{{ __('Password') }}</label>
 					<input type="password" class="form-control" name="password" id="password" placeholder="{{ __('Password') }}" required autocomplete="off">
 					<span class="invalid-feedback" id="passwordEmpty" style="display: none">
 						<strong>{{ __('validation.required', ['attribute' => __('Password')]) }}</strong>
 					</span>
 				</div>
 				<div class="form-group col-md-6">
-					<label for="contraseña">{{ __('Confirm Password') }}</label>
+					<label class="required" for="contraseña">{{ __('Confirm Password') }}</label>
 					<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="{{ __('Confirm Password') }}" required autocomplete="off">
 					<span class="invalid-feedback" id="password_confirmationEmpty" style="display: none">
 						<strong>{{ __('validation.required', ['attribute' => __('Confirm Password')]) }}</strong>
@@ -150,8 +150,8 @@
 	</form>
 @endsection
 @section('modal-footer')
-	<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-	<button class="btn btn-primary" id="btnEditar" type="button">Modificar</button>
+	<button class="btn btn-secondary" data-dismiss="modal" type="button">{{ __('Close') }}</button>
+	<button class="btn btn-primary" id="btnEditar" type="button">{{ __('Modify') }}</button>
 @endsection
 @section('modal-script')
 	<script type="text/javascript">
