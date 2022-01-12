@@ -108,6 +108,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'nombre' => [
+            'required' => 'The Name field is required.',
+        ],
     ],
     'attributes' => [],
 ];

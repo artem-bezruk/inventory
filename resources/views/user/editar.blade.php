@@ -11,13 +11,13 @@
 				<table>
 					<tbody>
 						<tr>
-							<td>{{ __('Choose') }} <strong>{{ __('Personal Information') }} (PI)</strong> {{ __('or') }} <strong>{{ __('User Information') }} (UI)</strong> {{ __('to change the respective data') }}.</td>
-						</tr>
-						<tr>
 							<th>{{ __('Note') }}:</th>
 						</tr>
 						<tr>
 							<td>{{ __('The fields marked with') }} <span class="required"></span> {{ __('are required') }}.</td>
+						</tr>
+						<tr>
+							<td>{{ __('Choose') }} <strong>{{ __('Personal Information') }} (PI)</strong> {{ __('or') }} <strong>{{ __('User Information') }} (UI)</strong> {{ __('to change the respective data') }}.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-12">
 					<label for="cedula">{{ __('Identity document') }}</label>
 					<input type="text" class="form-control-plaintext" name="cedula" id="cedula" value="{{ $data->cedula }}" placeholder="{{ __('Identity document') }}" onkeypress="return keypressNumbersInteger(event)" readonly disabled autocomplete="off">
 				</div>
@@ -116,7 +116,7 @@
 		</div>
 		<div id="ui" style="display: none;">
 			<div class="form-row">
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-12">
 					<label for="usuario">{{ __('Username') }}</label>
 					<input type="text" class="form-control-plaintext" name="username" id="username" value="{{ $data->username }}" placeholder="{{ __('Username') }}" onkeypress="return keyPressValidarLetrasyOtrosCaracteres(event)" readonly disabled autocomplete="off">
 					<span class="invalid-feedback" id="usernameEmpty" style="display: none">
@@ -402,7 +402,7 @@
 					{
 						Swal.fire({
 							type: 'info',
-							title: "{{ __('Requesting information') }}",
+							title: "{{ __('Sending information') }}",
 							showConfirmButton: false,
 							allowEscapeKey: false,
 							allowOutsideClick: false,
@@ -431,7 +431,6 @@
 							timer: 1700
 						})
 					}
-					console.log(response, statusText, jqXHR.status)
 				})
 				.fail(function (e) {
 					Swal.fire({

@@ -64,6 +64,9 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'nombre' => ['required'],
+        ])->validate();
         return response()->json($request->all(), HttpStatus::Ok);
     }
     public function show($local, $id)
