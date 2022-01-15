@@ -105,11 +105,44 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
         'nombre' => [
             'required' => 'The Name field is required.',
+            'regex' => 'The Name format is invalid.',
+        ],
+        'apellido' => [
+            'required' => 'The Last name field is required.',
+            'regex' => 'The Last name format is invalid.',
+        ],
+        'cedula' => [
+            'required' => 'The Identity document field is required.',
+            'digits_between' => 'The Identity document must be between :min and :max digits.',
+            'numeric' => 'The Identity document must be a number.',
+            'unique' => 'The Identity document has already been taken.',
+        ],
+        'genero' => [
+            'required' => 'The Gender field is required.',
+            'numeric' => 'The Gender must be a number.',
+        ],
+        'correo' => [
+            'required' => 'The E-Mail Address field is required.',
+            'regex' => 'The E-Mail Address format is invalid.',
+            'unique' => 'The E-Mail Address has already been taken.',
+        ],
+        'username' => [
+            'required' => 'The Username field is required.',
+            'regex' => 'The Username format is invalid.',
+            'unique' => 'The Username has already been taken.',
+        ],
+        'rol' => [
+            'required' => 'The Rol field is required.',
+            'numeric' => 'The Rol must be a number.',
+        ],
+        'password' => [
+            'required' => 'The Password field is required.',
+        ],
+        'password_confirmation' => [
+            'required' => 'The Confirm Password field is required.',
+            'same' => 'The Confirm Password and Password must match.',
         ],
     ],
     'attributes' => [],

@@ -6,6 +6,9 @@
 	text-align: right;
 	padding-right: 10px;
 }
+.pace-running > *:not(.pace) {
+  opacity:0;
+}
 .required:after {
 	content: "*";
 	color: #FF0100;

@@ -24,7 +24,7 @@
 					<div id="divMensaje">
 						<h3 id="mensaje" class="text-center">{{ __('No content to show') }}</h3>
 					</div>
-					<div id="divTabla" class="table-responsive">
+					<div id="divTabla" class="table-responsive" style="display: none">
 						<table id="tabla" class="table table-bordered table-hover" width="100%">
 							<thead>
 								<tr>
@@ -49,7 +49,6 @@
 	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 	<script src="{{ asset('plugins/datatables-select/js/dataTables.select.min.js') }}"></script>
 	<script type="text/javascript">
-		$('#divTabla').hide();
 		$('[data-toggle="tooltip"]').tooltip();
 		Pace.on('done', function () {
 			listaUsuarios();

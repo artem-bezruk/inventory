@@ -78,7 +78,7 @@
 						<strong>{{ __('validation.required', ['attribute' => __('Gender')]) }}</strong>
 					</span>
 					<span class="invalid-feedback" id="generoNotNumber" style="display: none;">
-						<strong>{{ __('validation.regex', ['attribute' => __('Gender')]) }}</strong>
+						<strong>{{ __('validation.numeric', ['attribute' => __('Gender')]) }}</strong>
 					</span>
 				</div>
 				<div class="form-group col-md-6">
@@ -97,7 +97,7 @@
 						<strong>{{ __('validation.required', ['attribute' => __('Status')]) }}</strong>
 					</span>
 					<span class="invalid-feedback" id="estatusNotNumber" style="display: none;">
-						<strong>{{ __('validation.regex', ['attribute' => __('Status')]) }}</strong>
+						<strong>{{ __('validation.numeric', ['attribute' => __('Status')]) }}</strong>
 					</span>
 				</div>
 			</div>
@@ -142,7 +142,7 @@
 						<strong>{{ __('validation.required', ['attribute' => __('Confirm Password')]) }}</strong>
 					</span>
 					<span class="invalid-feedback" id="password_confirmationNotSame" style="display: none">
-						<strong>{{ __('validation.same', ['attribute' => __('Password'), 'other' => __('Confirm Password')]) }}</strong>
+						<strong>{{ __('validation.same', ['attribute' => __('Confirm Password'), 'other' => __('Password')]) }}</strong>
 					</span>
 				</div>
 			</div>

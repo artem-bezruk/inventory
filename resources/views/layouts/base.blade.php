@@ -35,7 +35,7 @@
 	</div>
 @endsection
 @section('main-js')
-	<script src="{{ asset('plugins/pace-progress/pace.min.js') }}" type="text/javascript"></script>
+	<script data-pace-options='{ "ajax": false }' src="{{ asset('plugins/pace-progress/pace.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 	<script>

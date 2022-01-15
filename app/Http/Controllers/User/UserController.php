@@ -59,15 +59,44 @@ class UserController extends Controller
     {
         $this->respuesta["extras"] = (object) [
             "generos" => \App\Genero::all(),
+            "roles" => \App\Rol::all(),
         ];
         return response()->view('user.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'nombre' => ['required'],
+            'nombre' => ['required', 'regex:/^([a-zA-Z])+((\s*)+([a-zA-Z]*)*)+$/'],
+            'apellido' => ['required', 'regex:/^([a-zA-Z])+((\s*)+([a-zA-Z]*)*)+$/'],
+            'cedula' => ['required', 'numeric', 'digits_between:7,8', 'unique:users'],
+            'genero' => ['required', 'numeric'],
+            'correo' => ['required', 'regex:/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/', 'unique:users'],
+            'username' => ['required', 'regex:/^([a-zA-Z]|[0-9])*$/', 'unique:users'],
+            'rol' => ['required', 'numeric'],
+            'password' => ['required'],
+            'password_confirmation' => ['required', 'same:password'],
         ])->validate();
-        return response()->json($request->all(), HttpStatus::Ok);
+        $estatus = \App\Estatu::where('estado', 'Active')->first();
+        $user = new User();
+        $user->nombre = trim($request->nombre);
+        $user->apellido = trim($request->apellido);
+        $user->cedula = $request->cedula;
+        $user->genero_id = $request->genero;
+        $user->estatus_id = $estatus->id;
+        $user->correo = trim($request->correo);
+        $user->rol_id = $request->rol;
+        $user->username = trim($request->username);
+        $user->password = Hash::make($request->password);
+        $user->fecha_registro = new \DateTime('now');
+        try {
+            $user->save();
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (QueryException $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($local, $id)
     {
