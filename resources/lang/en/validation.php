@@ -144,6 +144,9 @@ return [
             'required' => 'The Confirm Password field is required.',
             'same' => 'The Confirm Password and Password must match.',
         ],
+        'nombre' => [
+            'required' => 'The Name field is required.',
+        ],
     ],
     'attributes' => [],
 ];
