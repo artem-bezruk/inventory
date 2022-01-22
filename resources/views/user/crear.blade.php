@@ -177,6 +177,7 @@
 	<button class="btn btn-primary" id="btnCrear" type="button">{{ __('Create') }}</button>
 @endsection
 @section('modal-script')
+	<script src="{{ asset('js/user.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		var nombre = $('#nombre');
 		var nombreValidado = false;

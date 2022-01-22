@@ -163,6 +163,7 @@ class UserController extends Controller
                 }
                 $this->respuesta["extras"] = (object) [
                     "generos" => \App\Genero::all(),
+                    "roles" => \App\Rol::all(),
                     "estatus" => \App\Estatu::all(),
                 ];
                 return response()->view('user.editar', $this->respuesta, HttpStatus::OK);
@@ -178,6 +179,15 @@ class UserController extends Controller
     }
     public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'nombre' => ['required_if:editar,1', 'regex:/^([a-zA-Z])+((\s*)+([a-zA-Z]*)*)+$/'],
+            'apellido' => ['required_if:editar,1', 'regex:/^([a-zA-Z])+((\s*)+([a-zA-Z]*)*)+$/'],
+            'genero' => ['required_if:editar,1', 'numeric'],
+            'correo' => ['required_if:editar,1', 'regex:/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/'],
+            'rol' => ['required_if:editar,2', 'numeric'],
+            'password' => ['required_if:editar,2'],
+            'password_confirmation' => ['required_if:editar,2', 'same:password'],
+        ])->validate();
         $fecha = new \Datetime('now');
         $user = User::find($id);
         switch ($request->editar) {
@@ -189,8 +199,14 @@ class UserController extends Controller
                 $user->correo = $request->correo;
                 break;
             case 2:
+                $user->rol_id = $request->rol;
                 $user->password = Hash::make($request->password);
                 break;
+        }
+        if ($user->isDirty('correo')) {
+            Validator::make($request->all(), [
+                'correo' => ['unique:users'],
+            ])->validate();
         }
         try {
             if ($user->isDirty()) {
