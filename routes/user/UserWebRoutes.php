@@ -9,3 +9,4 @@ Route::get($uri . '/list', $controller . 'users')->name('user.list')->middleware
 Route::get($uri . '/{user}/show', $controller . 'show')->name('user.show')->middleware('checkRol:users,r');
 Route::get($uri . '/{user}/edit', $controller . 'edit')->name('user.edit')->middleware('checkRol:users,r-u');
 Route::put($uri . '/{user}', $controller . 'update')->name('user.update')->middleware('checkRol:users,r-u');
+Route::delete($uri . '/{user}', $controller . 'destroy')->name('user.destroy')->middleware('checkRol:users,r-d');

@@ -50,6 +50,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('username', 'password');
         $credentials['estatus_id'] = 1;
+        $credentials['eliminado'] = 0;
         return $credentials;
     }
     public function username()

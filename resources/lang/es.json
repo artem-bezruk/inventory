@@ -97,5 +97,10 @@
     "Nothing to update": "Nada que actualizar",
     "Close": "Cerrar",
     "Modify": "Modificar",
-    "Create": "Crear"
+    "Create": "Crear",
+    "Are you sure?": "¿Estas seguro?",
+    "You won't be able to revert this!": "¡No podrás revertir esto!",
+    "Yes, delete it!": "Sí, ¡eliminar!",
+    "Cancel": "Cancelar",
+    "Can't delete the last Administrator": "No se puede eliminar el último Administrador"
 }

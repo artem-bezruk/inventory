@@ -20,9 +20,8 @@ class UserController extends Controller
     }
     public function users(Request $request)
     {
-        $this->respuesta["data"] = [];
         try {
-            $all = User::all();
+            $all = User::where('eliminado', 0)->get();
             foreach ($all as $user) {
                 if ($user->estatu()->first()->id == 1) {
                     $color = "success";
@@ -39,7 +38,8 @@ class UserController extends Controller
                     'estatus' => "<div class='badge badge-pill badge-" . $color . "'>" . __($user->estatu()->first()->estado) . "</div>",
                     'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
                     'urlMostrar' => route('user.show', ['locale' => app()->getLocale(), 'user' => $user->id]),
-                    'urlEditar' => route('user.edit', ['locale' => app()->getLocale(), 'user' => $user->id])
+                    'urlEditar' => route('user.edit', ['locale' => app()->getLocale(), 'user' => $user->id]),
+                    'urlEliminar' => route('user.destroy', ['locale' => app()->getLocale(), 'user' => $user->id]),
                 ];
             }
             if (empty($this->respuesta["data"])) {
@@ -100,10 +100,10 @@ class UserController extends Controller
     }
     public function show($local, $id)
     {
-        $this->respuesta["data"] = [];
         try {
             $user = User::find($id);
             if (!empty($user)) {
+                $this->respuesta["data"] = [];
                 foreach ($user as $value) {
                     $fecha_registro = new \DateTime($user->fecha_registro);
                     $fecha_modificacion = '';
@@ -136,31 +136,29 @@ class UserController extends Controller
     }
     public function edit($locale, $id)
     {
-        $this->respuesta["data"] = [];
         try {
             $user = User::find($id);
             if (!empty($user)) {
-                foreach ($user as $value) {
-                    $fecha_registro = new \DateTime($user->fecha_registro);
-                    $fecha_modificacion = '';
-                    if ($user->fecha_modificacion) {
-                        $aux = new \DateTime($user->fecha_modificacion);
-                        $fecha_modificacion = $aux->format('d-m-Y H:i:s');
-                    }
-                    $this->respuesta["data"] = (object) [
-                        'id' => $user->id,
-                        'username' => $user->username,
-                        'nombre' => $user->nombre,
-                        'apellido' => $user->apellido,
-                        'cedula' => $user->cedula,
-                        'correo' => $user->correo,
-                        'genero' => $user->genero_id,
-                        'rol' => $user->rol_id,
-                        'estatus' => $user->estatus_id,
-                        'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
-                        'fecha_modificacion' => $fecha_modificacion
-                    ];
+                $this->respuesta["data"] = [];
+                $fecha_registro = new \DateTime($user->fecha_registro);
+                $fecha_modificacion = '';
+                if ($user->fecha_modificacion) {
+                    $aux = new \DateTime($user->fecha_modificacion);
+                    $fecha_modificacion = $aux->format('d-m-Y H:i:s');
                 }
+                $this->respuesta["data"] = (object) [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'nombre' => $user->nombre,
+                    'apellido' => $user->apellido,
+                    'cedula' => $user->cedula,
+                    'correo' => $user->correo,
+                    'genero' => $user->genero_id,
+                    'rol' => $user->rol_id,
+                    'estatus' => $user->estatus_id,
+                    'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
+                    'fecha_modificacion' => $fecha_modificacion
+                ];
                 $this->respuesta["extras"] = (object) [
                     "generos" => \App\Genero::all(),
                     "roles" => \App\Rol::all(),
@@ -173,7 +171,7 @@ class UserController extends Controller
             }
         } catch (\Exception $e) {
             $httpStatus = HttpStatus::ERROR;
-            $this->respuesta = HttpStatus::ERROR();
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
         }
         return response()->json($this->respuesta, $httpStatus);
     }
@@ -220,11 +218,41 @@ class UserController extends Controller
             }
         } catch (QueryException $qe) {
             $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $user = User::find($id);
+        $fecha = new \Datetime('now');
+        try {
+            if ($user->rol()->first()->rol == "Administrator") {
+                $administradores = User::where('rol_id', $user->rol()->first()->id)->where('eliminado', 0)->count();
+                if ($administradores == 1) {
+                    $httpStatus = HttpStatus::ERROR;
+                    $this->respuesta["mensaje"] = __('Can\'t delete the last Administrator');
+                }
+                else {
+                    $user->eliminado = 1;
+                    $user->fecha_modificacion = $fecha;
+                    $user->save();
+                    $httpStatus = HttpStatus::OK;
+                    $this->respuesta["mensaje"] = HttpStatus::OK() . $administradores;
+                }
+            }
+            else {
+                $user->eliminado = 1;
+                $user->fecha_modificacion = $fecha;
+                $user->save();
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = $e->getMessage();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function profile ($id)
     {
