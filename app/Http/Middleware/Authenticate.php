@@ -17,7 +17,7 @@ class Authenticate extends Middleware
         }
         else {
             $this->auth->guard()->logout();
-    $request->session()->invalidate();
+            $request->session()->invalidate();
         }
         $this->unauthenticated($request, $guards);
     }

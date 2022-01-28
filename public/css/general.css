@@ -14,3 +14,7 @@
 	color: #FF0100;
 	margin-left: 2px;
 }
+.dd:after {
+	content: ":";
+	margin-left: 2px;
+}

@@ -104,25 +104,23 @@ class UserController extends Controller
             $user = User::find($id);
             if (!empty($user)) {
                 $this->respuesta["data"] = [];
-                foreach ($user as $value) {
-                    $fecha_registro = new \DateTime($user->fecha_registro);
-                    $fecha_modificacion = '';
-                    if ($user->fecha_modificacion) {
-                        $aux = new \DateTime($user->fecha_modificacion);
-                        $fecha_modificacion = $aux->format('d-m-Y H:i:s');
-                    }
-                    $this->respuesta["data"] = (object) [
-                        'username' => $user->username,
-                        'nombre' => $user->nombre,
-                        'apellido' => $user->apellido,
-                        'cedula' => $user->cedula,
-                        'genero' => __($user->genero()->first()->genero),
-                        'rol' => __($user->rol()->first()->rol),
-                        'estatus' => __($user->estatu()->first()->estado),
-                        'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
-                        'fecha_modificacion' => $fecha_modificacion
-                    ];
+                $fecha_registro = new \DateTime($user->fecha_registro);
+                $fecha_modificacion = '';
+                if ($user->fecha_modificacion) {
+                    $aux = new \DateTime($user->fecha_modificacion);
+                    $fecha_modificacion = $aux->format('d-m-Y H:i:s');
                 }
+                $this->respuesta["data"] = (object) [
+                    'username' => $user->username,
+                    'nombre' => $user->nombre,
+                    'apellido' => $user->apellido,
+                    'cedula' => $user->cedula,
+                    'genero' => __($user->genero()->first()->genero),
+                    'rol' => __($user->rol()->first()->rol),
+                    'estatus' => __($user->estatu()->first()->estado),
+                    'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
+                    'fecha_modificacion' => $fecha_modificacion
+                ];
                 return response()->view('user.mostrar', $this->respuesta, HttpStatus::OK);
             }
             else {
@@ -256,6 +254,45 @@ class UserController extends Controller
     }
     public function profile ($id)
     {
-        return view('user.perfil');
+        try {
+            $user = User::find(auth()->user()->id);
+            if (!empty($user)) {
+                $this->respuesta["data"] = [];
+                $fecha_registro = new \DateTime($user->fecha_registro);
+                $fecha_modificacion = '';
+                if ($user->fecha_modificacion) {
+                    $aux = new \DateTime($user->fecha_modificacion);
+                    $fecha_modificacion = $aux->format('d-m-Y H:i:s');
+                }
+                $this->respuesta["data"] = (object) [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'nombre' => $user->nombre,
+                    'apellido' => $user->apellido,
+                    'cedula' => $user->cedula,
+                    'correo' => $user->correo,
+                    'genero' => $user->genero()->first()->genero,
+                    'rol' => $user->rol()->first()->rol,
+                    'estatus' => $user->estatu()->first()->estado,
+                    'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
+                    'fecha_modificacion' => $fecha_modificacion
+                ];
+                return view('user.perfil', $this->respuesta);
+            }
+            else {
+                $mensaje = (object) [
+                    "tipo" => 'i',
+                    "mensaje" => __('We\'ve problems to show your data')
+                ];
+                session()->flash('alerta', $mensaje);
+            }
+        } catch (\Exception $e) {
+            $mensaje = (object) [
+                "tipo" => 'e',
+                "mensaje" => __('Oops! Something went wrong')
+            ];
+            session()->flash('alerta', $mensaje);
+        }
+        return redirect()->route('dashboard', ['locale' => app()->getLocale()]);
     }
 }
