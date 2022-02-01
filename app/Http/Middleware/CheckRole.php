@@ -8,6 +8,12 @@ class CheckRole
 {
     public function handle($request, Closure $next, $modulo, $prioridades)
     {
+        if (auth()->user()->eliminado) {
+            auth()->guard()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect(route('home', ['locale' => app()->getLocale()]));
+        }
         $rol_id = auth()->user()->rol_id;
         $modulo_id = Modulo::where('modulo', $modulo)->first()->id;
         $prioridades = explode('-', $prioridades);

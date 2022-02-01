@@ -2,7 +2,6 @@
 @section('tab-title', __('Users'))
 @section('css')
 	<link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-	<link rel="stylesheet" href="{{ asset('plugins/datatables-select/css/select.bootstrap4.min.css') }}">
 @endsection
 @section('breadcrumb-title', __('Users'))
 @section('breadcrumb')
@@ -47,7 +46,6 @@
 @section('script')
 	<script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
 	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-	<script src="{{ asset('plugins/datatables-select/js/dataTables.select.min.js') }}"></script>
 	<script type="text/javascript">
 		$('[data-toggle="tooltip"]').tooltip();
 		Pace.on('done', function () {

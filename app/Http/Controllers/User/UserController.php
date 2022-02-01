@@ -22,6 +22,7 @@ class UserController extends Controller
     {
         try {
             $all = User::where('eliminado', 0)->get();
+            $this->respuesta["data"] = [];
             foreach ($all as $user) {
                 if ($user->estatu()->first()->id == 1) {
                     $color = "success";
@@ -30,12 +31,12 @@ class UserController extends Controller
                     $color = "danger";
                 }
                 $fecha_registro = new \DateTime($user->fecha_registro);
-                $this->respuesta["data"][] = [
+                $this->respuesta["data"][] = (object) [
                     'id' => $user->id,
                     'nombre' => ucwords($user->nombre) . ' ' . ucwords($user->apellido),
-                    'genero' => __($user->genero()->first()->genero),
-                    'rol' => __($user->rol()->first()->rol),
-                    'estatus' => "<div class='badge badge-pill badge-" . $color . "'>" . __($user->estatu()->first()->estado) . "</div>",
+                    'genero' => __($user->genero()->genero),
+                    'rol' => __($user->rol()->rol),
+                    'estatus' => "<div class='badge badge-pill badge-" . $color . "'>" . __($user->estatu()->estado) . "</div>",
                     'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
                     'urlMostrar' => route('user.show', ['locale' => app()->getLocale(), 'user' => $user->id]),
                     'urlEditar' => route('user.edit', ['locale' => app()->getLocale(), 'user' => $user->id]),
@@ -103,7 +104,6 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             if (!empty($user)) {
-                $this->respuesta["data"] = [];
                 $fecha_registro = new \DateTime($user->fecha_registro);
                 $fecha_modificacion = '';
                 if ($user->fecha_modificacion) {
@@ -115,9 +115,9 @@ class UserController extends Controller
                     'nombre' => $user->nombre,
                     'apellido' => $user->apellido,
                     'cedula' => $user->cedula,
-                    'genero' => __($user->genero()->first()->genero),
-                    'rol' => __($user->rol()->first()->rol),
-                    'estatus' => __($user->estatu()->first()->estado),
+                    'genero' => __($user->genero()->genero),
+                    'rol' => __($user->rol()->rol),
+                    'estatus' => __($user->estatu()->estado),
                     'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
                     'fecha_modificacion' => $fecha_modificacion
                 ];
@@ -137,7 +137,6 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             if (!empty($user)) {
-                $this->respuesta["data"] = [];
                 $fecha_registro = new \DateTime($user->fecha_registro);
                 $fecha_modificacion = '';
                 if ($user->fecha_modificacion) {
@@ -257,7 +256,6 @@ class UserController extends Controller
         try {
             $user = User::find(auth()->user()->id);
             if (!empty($user)) {
-                $this->respuesta["data"] = [];
                 $fecha_registro = new \DateTime($user->fecha_registro);
                 $fecha_modificacion = '';
                 if ($user->fecha_modificacion) {
@@ -271,9 +269,9 @@ class UserController extends Controller
                     'apellido' => $user->apellido,
                     'cedula' => $user->cedula,
                     'correo' => $user->correo,
-                    'genero' => $user->genero()->first()->genero,
-                    'rol' => $user->rol()->first()->rol,
-                    'estatus' => $user->estatu()->first()->estado,
+                    'genero' => $user->genero()->genero,
+                    'rol' => $user->rol()->rol,
+                    'estatus' => $user->estatu()->estado,
                     'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
                     'fecha_modificacion' => $fecha_modificacion
                 ];

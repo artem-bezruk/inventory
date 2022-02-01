@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
 	        	RolesSeeder::class,
 	        	ModulosSeeder::class,
 	        	ModulosHasRolesSeeder::class,
+	        	AccionesSeeder::class,
 	        	UsersSeeder::class,
 	        ]);
     	}
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
 	        	RolesSeeder::class,
 	        	ModulosSeeder::class,
 	        	ModulosHasRolesSeeder::class,
+	        	AccionesSeeder::class,
 	        	UsersSeeder::class,
 	        ]);
     	}

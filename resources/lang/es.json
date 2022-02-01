@@ -105,5 +105,7 @@
     "Can't delete the last Administrator": "No se puede eliminar el último Administrador",
     "we've problems to show your data": "Tenemos problemas para mostrar sus datos",
     "since": "desde",
-    "Last update": "última actualización"
+    "Last update": "última actualización",
+    "Logged in": "Conectado",
+    "Logged out": "Desconectado"
 }

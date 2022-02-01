@@ -15,14 +15,14 @@ class User extends Authenticatable
     public $timestamps = false;
     public function rol ()
     {
-        return $this->belongsTo('App\Rol', 'rol_id');
+        return $this->belongsTo('App\Rol', 'rol_id')->first();
     }
     public function genero ()
     {
-        return $this->belongsTo('App\Genero', 'genero_id');
+        return $this->belongsTo('App\Genero', 'genero_id')->first();
     }
     public function estatu ()
     {
-        return $this->belongsTo('App\Estatu', 'estatus_id');
+        return $this->belongsTo('App\Estatu', 'estatus_id')->first();
     }
 }
