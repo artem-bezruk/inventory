@@ -2,6 +2,7 @@
 @section('tab-title', __('Binnacle'))
 @section('css')
 	<link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+	<link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datepicker3.min.css') }}">
 @endsection
 @section('breadcrumb-title', __('Binnacle'))
 @section('breadcrumb')
@@ -17,23 +18,63 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<div id="divMensaje">
-						<h3 id="mensaje" class="text-center">{{ __('No content to show') }}</h3>
-					</div>
-					<div id="divTabla" class="table-responsive">
-						<table id="tabla" class="table table-bordered table-hover" width="100%">
-							<thead>
-								<tr>
-									<th>{{ __('Username') }}</th>
-									<th>{{ __('Module') }}</th>
-									<th>{{ __('item') }}</th>
-									<th>{{ __('Action') }}</th>
-									<th>{{ __('Description') }}</th>
-									<th>{{ __('IP') }}</th>
-									<th>{{ __('Date') }}</th>
-								</tr>
-							</thead>
-						</table>
+					<div class="container-fluid">
+						<div class="row mb-4">
+							<form id="filtros" class="form-inline">
+								<div class="form-group mb-2 mr-1">
+									<select name="username" class="form-control">
+										<option value="" selected>{{ __('Choose') }} {{ __('Username') }}</option>
+										@foreach ($extras->users as $user)
+											<option value="{{ $user->id }}">{{ $user->username }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group mb-2 mr-1">
+									<select name="modulo" class="form-control">
+										<option value="" selected>{{ __('Choose') }} {{ __('Module') }}</option>
+										@foreach ($extras->modulos as $modulo)
+											<option value="{{ $modulo->id }}">{{ $modulo->modulo }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group mb-2 mr-1">
+									<select name="accion" class="form-control">
+										<option value="" selected>{{ __('Choose') }} {{ __('Action') }}</option>
+										@foreach ($extras->acciones as $accion)
+											<option value="{{ $accion->id }}">{{ __($accion->accion) }}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="input-group input-daterange mb-2 mr-1">
+									<input class="form-control" type="text" name="fecha_inicio" id="fecha_inicio" placeholder="{{ __('Date') }}" autocomplete="off">
+									<div class="input-group-append">
+									    <span class="input-group-text">{{ __('to') }}</span>
+									</div>
+									<input class="form-control" type="text" name="fecha_fin" id="fecha_fin" placeholder="{{ __('Date') }}" autocomplete="off">
+								</div>
+								<button class="btn btn-primary mb-2">{{ __('Filter') }}</button>
+							</form>
+						</div>
+						<div id="divMensaje">
+							<h3 id="mensaje" class="text-center">{{ __('No content to show') }}</h3>
+						</div>
+						<div id="divTabla" class="row" style="display: none;">
+							<div class="table-responsive">
+								<table id="tabla" class="table table-bordered table-hover" width="100%">
+									<thead>
+										<tr>
+											<th>{{ __('Username') }}</th>
+											<th>{{ __('Module') }}</th>
+											<th>{{ __('item') }}</th>
+											<th>{{ __('Action') }}</th>
+											<th>{{ __('Description') }}</th>
+											<th>{{ __('IP') }}</th>
+											<th>{{ __('Date') }}</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -43,17 +84,41 @@
 @section('script')
 	<script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
 	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+	<script src="{{ asset('plugins/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ asset('plugins/datepicker/locale/bootstrap-datepicker.es.min.js') }}"></script>
 	<script type="text/javascript">
 		Pace.on('done', function () {
 			lista();
 		});
 		var locale = "{{ app()->getLocale() }}";
-		function lista ()
+		$('.input-daterange input').each(function() {
+			$(this).datepicker({
+				autoclose: true,
+				format: 'dd-mm-yyyy',
+				todayHighlight: true,
+				todayBtn: true,
+				clearBtn: true,
+				disableTouchKeyboard: true,
+				language: locale,
+			});
+		});
+		$('#filtros').on('submit', function (e) {
+			e.preventDefault();
+			var data = $(this).serializeArray();
+			lista(data);
+		});
+		$('#fecha_inicio').on('change', function () {
+			console.log('fecha_inicio')
+			$('#fecha_fin').datepicker('setStartDate', $(this).val());
+			$('#fecha_fin').datepicker('update', $(this).val());
+		});
+		function lista (data = null)
 		{
 			var url = "{{ route('bitacora.list', [ 'locale' => app()->getLocale() ]) }}";
 			$.ajax({
 				type: 'GET',
 				url: url,
+				data: data,
 				contentType: 'application/json',
 				cache:false,
 				beforeSend: function ()
@@ -96,18 +161,10 @@
 					];
 					var data = [];
 					response.data.forEach( function(element, index) {
-						// divBotonOpen = '<div class="btn-group d-flex justify-content-center" role="group">';
-						// divBotonClose = '</div>';
-						// mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarUsuario(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
-						// editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}" onclick="editarUsuario(' + "'" + element.urlEditar + "'" + ')"><i class="far fa-edit"></i></button>';
-						// eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}" onclick="eliminarUsuario(' + "'" + element.urlEliminar + "'" + ')"><i class="fas fa-trash-alt"></i></button>';
-						// opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
-						// element.opciones = opciones;
 						data.push(element);
 					});
 					crearTabla(locale, 'tabla', data, columns);
 				}
-				console.log(response)
 			})
 			.fail(function (e) {
 				setTimeout(function () {

@@ -91,6 +91,11 @@ class UserController extends Controller
         $user->fecha_registro = new \DateTime('now');
         try {
             $user->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'users')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created User";
+            $bitacora->registro($modulo->id, $user->id, $accion->id, \Request::ip(), $descripcion);
             $httpStatus = HttpStatus::CREATED;
             $this->respuesta["mensaje"] = HttpStatus::CREATED();
         } catch (QueryException $e) {
@@ -207,6 +212,11 @@ class UserController extends Controller
             if ($user->isDirty()) {
                 $user->fecha_modificacion = $fecha;
                 $user->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'users')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated User";
+                $bitacora->registro($modulo->id, $user->id, $accion->id, \Request::ip(), $descripcion);
                 $httpStatus = HttpStatus::OK;
                 $this->respuesta["mensaje"] = HttpStatus::OK();
             }
@@ -234,6 +244,11 @@ class UserController extends Controller
                     $user->eliminado = 1;
                     $user->fecha_modificacion = $fecha;
                     $user->save();
+                    $bitacora = new \App\Bitacora();
+                    $modulo = \App\Modulo::where('modulo', 'users')->first();
+                    $accion = \App\Accion::where('accion', 'Delete')->first();
+                    $descripcion = "Deleted User";
+                    $bitacora->registro($modulo->id, $user->id, $accion->id, \Request::ip(), $descripcion);
                     $httpStatus = HttpStatus::OK;
                     $this->respuesta["mensaje"] = HttpStatus::OK() . $administradores;
                 }
@@ -242,6 +257,11 @@ class UserController extends Controller
                 $user->eliminado = 1;
                 $user->fecha_modificacion = $fecha;
                 $user->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'users')->first();
+                $accion = \App\Accion::where('accion', 'Delete')->first();
+                $descripcion = "Deleted User";
+                $bitacora->registro($modulo->id, $user->id, $accion->id, \Request::ip(), $descripcion);
                 $httpStatus = HttpStatus::OK;
                 $this->respuesta["mensaje"] = HttpStatus::OK();
             }

@@ -55,6 +55,7 @@
     "Genders": "Géneros",
     "Gender": "Género",
     "Modules": "Módulos",
+    "Module": "Módulo",
     "Nomenclatures": "Nomenclaturas",
     "Roles": "Roles",
     "by": "por",
@@ -106,6 +107,15 @@
     "we've problems to show your data": "Tenemos problemas para mostrar sus datos",
     "since": "desde",
     "Last update": "última actualización",
+    "Action": "Acción",
+    "Update": "Actualizar",
+    "Description": "Descripción",
+    "Date": "Fecha",
     "Logged in": "Conectado",
-    "Logged out": "Desconectado"
+    "Logged out": "Desconectado",
+    "Filter": "Filtrar",
+    "to": "a",
+    "Created User": "Usuario Creado",
+    "Updated User": "Usuario Actualizado",
+    "Deleted User": "Usuario Eliminado"
 }

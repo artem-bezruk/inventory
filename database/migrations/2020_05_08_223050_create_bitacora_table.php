@@ -14,7 +14,8 @@ class CreateBitacoraTable extends Migration
             $table->unsignedBigInteger('accion_id');
             $table->string('ip', 45);
             $table->string('descripcion', 255);
-            $table->timestamp('fecha');
+            $table->string('fecha', 45);
+            $table->string('hora', 45);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('modulo_id')->references('id')->on('modulos');
             $table->foreign('accion_id')->references('id')->on('acciones');

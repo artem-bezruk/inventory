@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers\Auth;
-use App\Bitacora;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -18,7 +17,7 @@ class LoginController extends Controller
     }
     public function redirectTo()
     {
-        $bitacora = new Bitacora();
+        $bitacora = new \App\Bitacora();
         $accion = \App\Accion::where('accion', 'Login')->first();
         $descripcion = "Logged in";
         $bitacora->registro(null, null, $accion->id, \Request::ip(), $descripcion);
@@ -64,7 +63,7 @@ class LoginController extends Controller
     }
     public function logout (Request $request)
     {
-        $bitacora = new Bitacora();
+        $bitacora = new \App\Bitacora();
         $accion = \App\Accion::where('accion', 'Logout')->first();
         $descripcion = "Logged out";
         $bitacora->registro(null, null, $accion->id, \Request::ip(), $descripcion);

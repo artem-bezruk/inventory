@@ -20,22 +20,26 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<div id="divMensaje">
-						<h3 id="mensaje" class="text-center">{{ __('No content to show') }}</h3>
-					</div>
-					<div id="divTabla" class="table-responsive" style="display: none">
-						<table id="tabla" class="table table-bordered table-hover" width="100%">
-							<thead>
-								<tr>
-									<th>{{ __('Name') }} {{ __('and') }} {{ __('Last name') }}</th>
-									<th>{{ __('Gender') }}</th>
-									<th>{{ __('Rol') }}</th>
-									<th>{{ __('Status') }}</th>
-									<th>{{ __('Register Date') }}</th>
-									<th>{{ __('Options') }}</th>
-								</tr>
-							</thead>
-						</table>
+					<div class="container-fluid">
+						<div id="divMensaje">
+							<h3 id="mensaje" class="text-center">{{ __('No content to show') }}</h3>
+						</div>
+						<div id="divTabla" class="row" style="display: none">
+							<div class="table-responsive">
+								<table id="tabla" class="table table-bordered table-hover" width="100%">
+									<thead>
+										<tr>
+											<th>{{ __('Name') }} {{ __('and') }} {{ __('Last name') }}</th>
+											<th>{{ __('Gender') }}</th>
+											<th>{{ __('Rol') }}</th>
+											<th>{{ __('Status') }}</th>
+											<th>{{ __('Register Date') }}</th>
+											<th>{{ __('Options') }}</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

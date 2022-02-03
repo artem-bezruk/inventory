@@ -20,6 +20,7 @@ class Bitacora extends Model
     }
     public function registro ($modulo, $item, int $accion, string $ip, string $descripcion)
     {
+        $fecha = new \Datetime('now');
         DB::table($this->table)->insert([
             'user_id' => auth()->user()->id,
             'modulo_id' => $modulo,
@@ -27,7 +28,8 @@ class Bitacora extends Model
             'accion_id' => $accion,
             'ip' => $ip,
             'descripcion' => $descripcion,
-            'fecha' => new \Datetime('now'),
+            'fecha' => $fecha->format('Y-m-d'),
+            'hora' => $fecha->format('H:i:s'),
         ]);
     }
 }
