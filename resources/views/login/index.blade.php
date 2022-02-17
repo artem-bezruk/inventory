@@ -9,6 +9,9 @@
 	<link href="{{ asset('fonts/SourceSansPro.css') }}" rel="stylesheet">
 @endsection
 @section('main-content')
+	@php
+		$route = Route::currentRouteName();
+	@endphp
 	<div class="login-box">
 		<div class="card">
 			<div class="card-header" style="border-bottom-width: 0px;padding-bottom: 5px;">
@@ -62,10 +65,10 @@
 				</form>
 			</div>
 			<div class="card-footer text-center">
-				<a href="{{ route('login', ['locale' => 'en']) }}">
+				<a href="{{ route($route, ['locale' => 'en']) }}">
 					<img src="{{ asset('img/en.png') }}" alt="en" width="30" height="30">
 				</a>
-				<a href="{{ route('login', ['locale' => 'es']) }}">
+				<a href="{{ route($route, ['locale' => 'es']) }}">
 					<img src="{{ asset('img/es.png') }}" alt="es" width="30" height="30">
 				</a>
 			</div>
@@ -78,6 +81,6 @@
 	<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('js/adminlte.min.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
-		$('body').addClass('hold-transition login-page');
+		$('body').addClass('login-page');
 	</script>
 @endsection

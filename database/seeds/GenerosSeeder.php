@@ -6,8 +6,8 @@ class GenerosSeeder extends Seeder
     public function run()
     {
         $generos = [
-        	'Female',
-        	'Male'
+        	'Femenino',
+        	'Masculino'
         ];
         foreach ($generos as $value) {
         	DB::table('generos')->insert([

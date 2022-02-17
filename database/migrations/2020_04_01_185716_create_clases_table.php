@@ -8,7 +8,7 @@ class CreateClasesTable extends Migration
     {
         Schema::create('clases', function (Blueprint $table) {
             $table->id();
-            $table->string('clase', 45);
+            $table->string('clases', 45);
             $table->boolean('eliminado')->default(0);
         });
     }

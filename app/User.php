@@ -10,19 +10,19 @@ class User extends Authenticatable
         'nombre', 'apellido', 'cedula',  'genero_id', 'correo', 'estatus_id', 'rol_id', 'username', 'password', 'fecha_registro',
     ];
     protected $hidden = [
-        'password', 'remember_token'
+        'password'
     ];
     public $timestamps = false;
     public function rol ()
     {
-        return $this->belongsTo('App\Rol', 'rol_id')->first();
+        return $this->belongsTo('App\Rol', 'id');
     }
     public function genero ()
     {
-        return $this->belongsTo('App\Genero', 'genero_id')->first();
+        return $this->belongsTo('App\Genero', 'id');
     }
     public function estatu ()
     {
-        return $this->belongsTo('App\Estatu', 'estatus_id')->first();
+        return $this->belongsTo('App\Estatu', 'id');
     }
 }

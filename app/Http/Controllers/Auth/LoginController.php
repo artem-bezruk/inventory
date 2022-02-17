@@ -17,10 +17,6 @@ class LoginController extends Controller
     }
     public function redirectTo()
     {
-        $bitacora = new \App\Bitacora();
-        $accion = \App\Accion::where('accion', 'Login')->first();
-        $descripcion = "Logged in";
-        $bitacora->registro(null, null, $accion->id, \Request::ip(), $descripcion);
         return route('dashboard', ['locale' => app()->getLocale()]);
     }
     public function login(Request $request)
@@ -52,10 +48,7 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
-        $credentials = $request->only('username', 'password');
-        $credentials['estatus_id'] = 1;
-        $credentials['eliminado'] = 0;
-        return $credentials;
+        return $request->only('username', 'password');
     }
     public function username()
     {
@@ -63,10 +56,6 @@ class LoginController extends Controller
     }
     public function logout (Request $request)
     {
-        $bitacora = new \App\Bitacora();
-        $accion = \App\Accion::where('accion', 'Logout')->first();
-        $descripcion = "Logged out";
-        $bitacora->registro(null, null, $accion->id, \Request::ip(), $descripcion);
         $this->guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

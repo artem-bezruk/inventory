@@ -8,17 +8,12 @@ class CreateBitacoraTable extends Migration
     {
         Schema::create('bitacora', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('modulo_id')->nullable();
-            $table->integer('item')->nullable();
-            $table->unsignedBigInteger('accion_id');
-            $table->string('ip', 45);
+            $table->unsignedBigInteger('modulo_id');
+            $table->integer('item');
+            $table->string('accion', 45);
             $table->string('descripcion', 255);
-            $table->string('fecha', 45);
-            $table->string('hora', 45);
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamp('fecha');
             $table->foreign('modulo_id')->references('id')->on('modulos');
-            $table->foreign('accion_id')->references('id')->on('acciones');
         });
     }
     public function down()

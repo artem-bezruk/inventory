@@ -35,7 +35,7 @@
 				</p>
 			</li>
 			<li class="user-footer">
-				<a href="{{ route('user.perfil', ['locale' => app()->getLocale()]) }}" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
+				<a href="{{ route('user.perfil', ['locale' => app()->getLocale(), 'user' => auth()->user()->id]) }}" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
 				<a class="btn btn-default btn-flat float-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 					{{ __('Logout') }}
 				</a>

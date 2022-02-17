@@ -12,9 +12,8 @@ class CreateUsersTable extends Migration
             $table->string('apellido', 50);
             $table->string('cedula')->unique()->nullable();
             $table->unsignedBigInteger('genero_id');
-            $table->string('correo', 70)->unique();
+            $table->string('correo', 70);
             $table->unsignedBigInteger('estatus_id');
-            $table->boolean('eliminado')->default(0);
             $table->unsignedBigInteger('rol_id');
             $table->string('username', 45)->unique();
             $table->string('password', 255);

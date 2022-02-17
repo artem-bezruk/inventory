@@ -9,7 +9,6 @@ class CreateModulosTable extends Migration
         Schema::create('modulos', function (Blueprint $table) {
             $table->id();
             $table->string('modulo', 45);
-            $table->boolean('filtrable')->default(0);
             $table->boolean('eliminado')->default(0);
         });
     }

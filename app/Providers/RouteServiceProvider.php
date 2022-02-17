@@ -8,7 +8,6 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/dashboard';
     public function boot()
     {
-        Route::pattern('user', '[0-9]+');
         parent::boot();
     }
     public function map()
