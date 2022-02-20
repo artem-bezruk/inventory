@@ -1,0 +1,20 @@
+#muestraData > tr > th, #muestraData > tr > td {
+	font-size: 20px;
+	margin: none;
+}
+#muestraData > tr > th {
+	text-align: right;
+	padding-right: 10px;
+}
+.pace-running > *:not(.pace) {
+  opacity:0;
+}
+.required:after {
+	content: "*";
+	color: #FF0100;
+	margin-left: 2px;
+}
+.dd:after {
+	content: ":";
+	margin-left: 2px;
+}

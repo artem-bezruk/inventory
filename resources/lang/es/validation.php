@@ -105,8 +105,64 @@ return [
     'url'                  => 'El formato del campo :attribute es inválido.',
     'uuid'                 => 'El campo :attribute debe ser un UUID válido.',
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'nombre' => [
+            'required' => 'El campo Nombre es obligatorio.',
+            'regex' => 'El formato del campo Nombre es inválido.',
+        ],
+        'apellido' => [
+            'required' => 'El campo Apellido es obligatorio.',
+            'regex' => 'El formato del campo Apellido es inválido.',
+        ],
+        'cedula' => [
+            'required' => 'El campo Documento de identidad es obligatorio.',
+            'digits_between' => 'El campo Documento de identidad debe contener entre :min y :max dígitos.',
+            'numeric' => 'El campo Documento de identidad debe ser un número.',
+            'unique' => 'El valor del campo Documento de identidad ya está en uso.',
+        ],
+        'genero' => [
+            'required' => 'El campo Género es obligatorio.',
+            'numeric' => 'El campo Género debe ser un número.',
+        ],
+        'correo' => [
+            'required' => 'El campo Correo electrónico es obligatorio.',
+            'regex' => 'El formato del campo Correo electrónico es inválido.',
+            'unique' => 'El valor del campo Correo electrónico ya está en uso.',
+        ],
+        'username' => [
+            'required' => 'El campo Nombre de Usuario es obligatorio.',
+            'regex' => 'El formato del campo Nombre de Usuario es inválido.',
+            'unique' => 'El valor del campo Nombre de Usuario ya está en uso.',
+        ],
+        'rol' => [
+            'required' => 'El campo Rol de Usuario es obligatorio.',
+            'numeric' => 'El campo Rol debe ser un número.',
+        ],
+        'password' => [
+            'required' => 'El campo Contraseña es obligatorio.',
+        ],
+        'password_confirmation' => [
+            'required' => 'El campo Confirmar contraseña es obligatorio.',
+            'same' => 'Los campos Confirmar contraseña y Contraseña deben coincidir.',
+        ],
+        'clase' => [
+            'required' => 'El campo Clase es obligatorio.',
+            'numeric' => 'El campo Clase debe ser un número.',
+        ],
+        'subclase' => [
+            'required' => 'El campo Subclase es obligatorio.',
+            'numeric' => 'El campo Subclase debe ser un número.',
+        ],
+        'categoria' => [
+            'required' => 'El campo Categoria es obligatorio.',
+            'numeric' => 'El campo Categoria debe ser un número.',
+        ],
+        'subcategoria' => [
+            'required' => 'El campo Subcategoria es obligatorio.',
+            'numeric' => 'El campo Subcategoria debe ser un número.',
+        ],
+        'marca' => [
+            'required' => 'El campo Marca es obligatorio.',
+            'numeric' => 'El campo Marca debe ser un número.',
         ],
     ],
     'attributes' => [],

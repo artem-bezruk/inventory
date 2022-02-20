@@ -25,7 +25,7 @@ Route::group([ 'prefix' => '{locale}', 'where' => ['locale' => '[a-z]{2}'], 'mid
 	require "configuration/ModuloWebRoutes.php";
 	require "configuration/NomenclaturaWebRoutes.php";
 	require "configuration/RolWebRoutes.php";
-	require "configuration/MarcaSubcategoriaWebRoutes.php";
+	require "configuration/MarcaCategoriaWebRoutes.php";
 	require "configuration/ModuloRolWebRoutes.php";
 	require "bien/BienWebRoutes.php";
 });

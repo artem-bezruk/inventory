@@ -206,12 +206,12 @@
 				<div class="small-box bg-info">
 					<div class="inner">
 						<h3>{{ __('Marks') }} {{ __('by') }}</h3>
-						<h3>{{ __('Subcategories') }}</h3>
+						<h3>{{ __('Categories') }}</h3>
 					</div>
 					<div class="icon">
 						<i class="far fa-circle"></i>
 					</div>
-					<a href="{{ route('marcasubcategoria.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
+					<a href="{{ route('marcacategoria.index', ['locale' => app()->getLocale()]) }}" class="small-box-footer">
 						<span>{{ __('Go') }}</span>
 						<i class="fas fa-arrow-circle-right"></i>
 					</a>

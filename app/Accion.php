@@ -1,8 +1,8 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-class Bienes extends Model
+class Accion extends Model
 {
-    protected $table = 'bienes';
+    protected $table = 'acciones';
     public $timestamps = false;
 }
