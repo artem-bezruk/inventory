@@ -47,7 +47,6 @@ class UserController extends Controller
             }
             else {
                 $httpStatus = HttpStatus::OK;
-                $this->respuesta["mensaje"] = HttpStatus::OK();
             }
         } catch (\Exception $e) {
             $httpStatus = HttpStatus::ERROR;

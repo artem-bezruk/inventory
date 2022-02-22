@@ -31,6 +31,14 @@
 								<table id="tabla" class="table table-bordered table-hover" width="100%">
 									<thead>
 										<tr>
+											<th>{{ __('Class') }}</th>
+											<th>{{ __('Subclass') }}</th>
+											<th>{{ __('Category') }}</th>
+											<th>{{ __('SubCategory') }}</th>
+											<th>{{ __('Mark') }}</th>
+											<th>{{ __('Capacity') }}</th>
+											<th>{{ __('Quantity') }}</th>
+											<th>{{ __('Options') }}</th>
 										</tr>
 									</thead>
 								</table>
@@ -47,8 +55,87 @@
 	<script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
 	<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 	<script type="text/javascript">
+		$('[data-toggle="tooltip"]').tooltip();
+		Pace.on('done', function () {
+			listaBienes();
+		});
+		var locale = "{{ app()->getLocale() }}";
 		function listaBienes ()
 		{
+			var url = "{{ route('bien.list', [ 'locale' => app()->getLocale() ]) }}";
+			$.ajax({
+				type: 'GET',
+				url: url,
+				contentType: 'application/json',
+				cache:false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					setTimeout(function () {
+						Swal.close();
+						if ($('#divMensaje').is(':hidden')) {
+						    $('#divMensaje').show();
+						}
+					}, 700);
+					$('#divTabla').hide();
+					$('#mensaje').text("{{ __('No content to show') }}");
+					$('#mensaje').removeClass('text-danger');
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						Swal.close();
+						$('#divMensaje').hide();
+						$('#divTabla').show();
+					}, 700);
+					var columns = [
+						{ data: 'clase' },
+						{ data: 'subclase' },
+						{ data: 'categoria' },
+						{ data: 'subcategoria' },
+						{ data: 'marca' },
+						{ data: 'capacidad' },
+						{ data: 'cantidad' },
+						{ data: 'opciones' },
+					];
+					var data = [];
+					response.data.forEach( function(element, index) {
+						divBotonOpen = '<div class="btn-group d-flex justify-content-center" role="group">';
+						divBotonClose = '</div>';
+						// mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarBien(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
+						// editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}" onclick="editarBien(' + "'" + element.urlEditar + "'" + ')"><i class="far fa-edit"></i></button>';
+						// eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}" onclick="eliminarBien(' + "'" + element.urlEliminar + "'" + ')"><i class="fas fa-trash-alt"></i></button>';
+						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}"><i class="far fa-eye"></i></button>';
+						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}"><i class="far fa-edit"></i></button>';
+						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}"><i class="fas fa-trash-alt"></i></button>';
+						opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
+						element.opciones = opciones;
+						// element.opciones = '';
+						data.push(element);
+					});
+					crearTabla(locale, 'tabla', data, columns);
+				}
+			})
+			.fail(function (e) {
+				setTimeout(function () {
+					Swal.close();
+					if ($('#divMensaje').is(':hidden')) {
+					    $('#divMensaje').show();
+					}
+				}, 700);
+				$('#divTabla').hide();
+				$('#mensaje').text("{{ __('Oops! Something went wrong') }}");
+				$('#mensaje').addClass('text-danger');
+			});
 		}
 		function crearBien ()
 		{

@@ -18,6 +18,38 @@ class BienController extends Controller
     }
     public function bienes(Request $request)
     {
+        try {
+            $all = Bien::where('eliminado', 0)->get();
+            $this->respuesta["data"] = [];
+            foreach ($all as $bien) {
+                if ($bien->capacidad_id) {
+                    $capacidad = $bien->capacidad()->capacidad . " " . $bien->capacidad()->nomenclatura()->nomenclatura . " (" . $bien->capacidad()->nomenclatura()->abreviatura . ")";
+                }
+                else {
+                    $capacidad = __('Doesn\'t apply');
+                }
+                $this->respuesta["data"][] = (object) [
+                    'id' => $bien->id,
+                    'clase' => __($bien->subcategoria()->categoria()->subclase()->clase()->clase),
+                    'subclase' => __($bien->subcategoria()->categoria()->subclase()->sub_clase),
+                    'categoria' => __($bien->subcategoria()->categoria()->categoria),
+                    'subcategoria' => __($bien->subcategoria()->sub_categoria),
+                    'marca' => __($bien->marca()->marca),
+                    'capacidad' => $capacidad,
+                    'cantidad' => $bien->cantidad
+                ];
+            }
+            if (empty($this->respuesta["data"])) {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+            else {
+                $httpStatus = HttpStatus::OK;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function create()
     {
