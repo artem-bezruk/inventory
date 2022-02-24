@@ -34,9 +34,12 @@ class BienController extends Controller
                     'subclase' => __($bien->subcategoria()->categoria()->subclase()->sub_clase),
                     'categoria' => __($bien->subcategoria()->categoria()->categoria),
                     'subcategoria' => __($bien->subcategoria()->sub_categoria),
+                    'modelo' => $bien->modelo,
                     'marca' => __($bien->marca()->marca),
                     'capacidad' => $capacidad,
-                    'cantidad' => $bien->cantidad
+                    'urlMostrar' => route('bien.show', ['locale' => app()->getLocale(), 'bien' => $bien->id]),
+                    'urlEditar' => '',
+                    'urlEliminar' => ''
                 ];
             }
             if (empty($this->respuesta["data"])) {
@@ -97,8 +100,45 @@ class BienController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $bien = Bien::find($id);
+            if (!empty($bien)) {
+                $fecha_registro = new \DateTime($bien->fecha_registro);
+                $fecha_modificacion = '';
+                if ($bien->capacidad_id) {
+                    $capacidad = $bien->capacidad()->capacidad . " " . $bien->capacidad()->nomenclatura()->nomenclatura . " (" . $bien->capacidad()->nomenclatura()->abreviatura . ")";
+                }
+                else {
+                    $capacidad = "";
+                }
+                if ($bien->fecha_modificacion) {
+                    $aux = new \DateTime($bien->fecha_modificacion);
+                    $fecha_modificacion = $aux->format('d-m-Y H:i:s');
+                }
+                $this->respuesta["data"] = (object) [
+                    'clase' => __($bien->subcategoria()->categoria()->subclase()->clase()->clase),
+                    'subclase' => __($bien->subcategoria()->categoria()->subclase()->sub_clase),
+                    'categoria' => __($bien->subcategoria()->categoria()->categoria),
+                    'subcategoria' => __($bien->subcategoria()->sub_categoria),
+                    'marca' => __($bien->marca()->marca),
+                    'modelo' => $bien->modelo,
+                    'capacidad' => $capacidad,
+                    'cantidad' => $bien->cantidad,
+                    'fecha_registro' => $fecha_registro->format('d-m-Y H:i:s'),
+                    'fecha_modificacion' => $fecha_modificacion,
+                ];
+                return response()->view('bien.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {

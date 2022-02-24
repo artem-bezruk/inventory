@@ -35,9 +35,9 @@
 											<th>{{ __('Subclass') }}</th>
 											<th>{{ __('Category') }}</th>
 											<th>{{ __('SubCategory') }}</th>
+											<th>{{ __('Model') }}</th>
 											<th>{{ __('Mark') }}</th>
 											<th>{{ __('Capacity') }}</th>
-											<th>{{ __('Quantity') }}</th>
 											<th>{{ __('Options') }}</th>
 										</tr>
 									</thead>
@@ -102,21 +102,18 @@
 						{ data: 'subclase' },
 						{ data: 'categoria' },
 						{ data: 'subcategoria' },
+						{ data: 'modelo' },
 						{ data: 'marca' },
 						{ data: 'capacidad' },
-						{ data: 'cantidad' },
 						{ data: 'opciones' },
 					];
 					var data = [];
 					response.data.forEach( function(element, index) {
 						divBotonOpen = '<div class="btn-group d-flex justify-content-center" role="group">';
 						divBotonClose = '</div>';
-						// mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarBien(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
-						// editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}" onclick="editarBien(' + "'" + element.urlEditar + "'" + ')"><i class="far fa-edit"></i></button>';
-						// eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}" onclick="eliminarBien(' + "'" + element.urlEliminar + "'" + ')"><i class="fas fa-trash-alt"></i></button>';
-						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}"><i class="far fa-eye"></i></button>';
-						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}"><i class="far fa-edit"></i></button>';
-						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}"><i class="fas fa-trash-alt"></i></button>';
+						mostrar = '<button type="button" class="btn btn-info" data-toggle="tooltip" title="{{ __('Show') }}" onclick="mostrarBien(' + "'" + element.urlMostrar + "'" +')"><i class="far fa-eye"></i></button>';
+						editar = '<button type="button" class="btn btn-secondary" data-toggle="tooltip" title="{{ __('Edit') }}" onclick="editarBien(' + "'" + element.urlEditar + "'" + ')"><i class="far fa-edit"></i></button>';
+						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}" onclick="eliminarBien(' + "'" + element.urlEliminar + "'" + ')"><i class="fas fa-trash-alt"></i></button>';
 						opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
 						element.opciones = opciones;
 						// element.opciones = '';
@@ -184,6 +181,63 @@
 					timer: 1700
 				})
 			});
+		}
+		function mostrarBien (url)
+		{
+			$.ajax({
+				type: 'GET',
+				url: url,
+				contentType: 'text/html',
+				cache: false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('No content to show') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						timer: 1700
+					})
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						$("#responseModal").html(response)
+						$("#mostrarbien").modal("toggle")
+						Swal.close();
+					},700);
+				}
+				console.log(response)
+			})
+			.fail(function (e) {
+				Swal.fire({
+					type: 'error',
+					title: "{{ __('Oops! Something went wrong') }}",
+					showConfirmButton: false,
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+					timer: 1700
+				})
+			});
+		}
+		function editarBien (url)
+		{
+			alert("editar " + url);
+		}
+		function eliminarBien (url)
+		{
+			alert("eliminar " + url);
 		}
 	</script>
 @endsection
