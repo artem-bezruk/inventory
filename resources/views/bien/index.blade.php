@@ -233,7 +233,51 @@
 		}
 		function editarBien (url)
 		{
-			alert("editar " + url);
+			$.ajax({
+				type: 'GET',
+				url: url,
+				contentType: 'text/html',
+				cache: false,
+				beforeSend: function ()
+				{
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('Requesting information') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+					})
+				}
+			})
+			.done(function (response, statusText, jqXHR) {
+				if (jqXHR.status == 204) {
+					Swal.fire({
+						type: 'info',
+						title: "{{ __('No content to show') }}",
+						showConfirmButton: false,
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						timer: 1700
+					})
+				}
+				if (jqXHR.status == 200) {
+					setTimeout(function () {
+						$("#responseModal").html(response)
+						$("#editarbien").modal("toggle")
+						Swal.close();
+					},700);
+				}
+			})
+			.fail(function (e) {
+				Swal.fire({
+					type: 'error',
+					title: "{{ __('Oops! Something went wrong') }}",
+					showConfirmButton: false,
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+					timer: 1700
+				})
+			});
 		}
 		function eliminarBien (url)
 		{

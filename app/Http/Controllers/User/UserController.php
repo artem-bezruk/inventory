@@ -221,7 +221,7 @@ class UserController extends Controller
             else {
                 $httpStatus = HttpStatus::NOCONTENT;
             }
-        } catch (\Exception $qe) {
+        } catch (\Exception $e) {
             $httpStatus = HttpStatus::ERROR;
             $this->respuesta["mensaje"] = HttpStatus::ERROR();
         }

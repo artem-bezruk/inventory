@@ -38,7 +38,7 @@ class BienController extends Controller
                     'marca' => __($bien->marca()->marca),
                     'capacidad' => $capacidad,
                     'urlMostrar' => route('bien.show', ['locale' => app()->getLocale(), 'bien' => $bien->id]),
-                    'urlEditar' => '',
+                    'urlEditar' => route('bien.edit', ['locale' => app()->getLocale(), 'bien' => $bien->id]),
                     'urlEliminar' => ''
                 ];
             }
@@ -140,11 +140,83 @@ class BienController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $bien = Bien::find($id);
+            if (!empty($bien)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $bien->id,
+                    'clase' => $bien->subcategoria()->categoria()->subclase()->clase()->id,
+                    'subclase' => $bien->subcategoria()->categoria()->subclase()->id,
+                    'categoria' => $bien->subcategoria()->categoria()->id,
+                    'subcategoria' => $bien->sub_categoria_id,
+                    'marca' => $bien->marca_id,
+                    'modelo'=> $bien->modelo,
+                    'cantidad' => $bien->cantidad,
+                    'capacidad' => $bien->capacidad_id,
+                ];
+                $this->respuesta["extras"] = (object) [
+                    "clases" => \App\Clase::where('eliminado', 0)->get(),
+                    "subclases" => \App\Subclase::where('eliminado', 0)->where('clase_id', $this->respuesta["data"]->clase)->get(),
+                    "categorias" => \App\Categoria::where('eliminado', 0)->where('sub_clase_id', $this->respuesta["data"]->subclase)->get(),
+                    "subcategorias" => \App\Subcategoria::where('eliminado', 0)->where('categoria_id', $this->respuesta["data"]->categoria)->get(),
+                    "marcas" => \App\MarcaByCategoria::where('eliminado', 0)->where('categoria_id', $this->respuesta["data"]->categoria)->get(),
+                    "capacidades" => \App\Capacidad::where('eliminado', 0)->get(),
+                ];
+                return response()->view('bien.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = $e->getMessage() ?? HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'clase' => ['required', 'numeric'],
+            'subclase' => ['required', 'numeric'],
+            'categoria' => ['required', 'numeric'],
+            'subcategoria' => ['required', 'numeric'],
+            'marca' => ['required', 'numeric'],
+            'ver_capacidad' => ['string'],
+            'capacidad' => ['required_if:ver_capacidad,true', 'numeric'],
+            'modelo' => ['required'],
+            'cantidad' => ['required'],
+            'modelo' => ['required', 'regex:/^([a-zA-Z0-9]+(.*))+$/'],
+            'cantidad' => ['required', 'numeric'],
+        ])->validate();
+        $bien = Bien::find($id);
+        $bien->marca_id = $request->marca;
+        $bien->sub_categoria_id = $request->subcategoria;
+        $bien->modelo = $request->modelo;
+        $bien->capacidad_id = $request->capacidad;
+        $bien->cantidad = $request->cantidad;
+        try {
+            if ($bien->isDirty()) {
+                $bien->usuario_modifica = auth()->user()->id;
+                $bien->fecha_modificacion = new \DateTime('now');
+                $bien->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'bienes')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Bien";
+                $bitacora->registro($modulo->id, $bien->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = $e->getMessage()?? HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {

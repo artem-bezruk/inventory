@@ -217,7 +217,7 @@
 		var password_confirmationValidado = false;
 		$(document).ready(function () {
 			password.prop('disabled', true);
-				password_confirmation.prop('disabled', true);
+			password_confirmation.prop('disabled', true);
 		});
 		$('#btnEditar').on('click', function () {
 			$('#formModificar').submit();
