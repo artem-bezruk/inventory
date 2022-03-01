@@ -150,5 +150,7 @@
     "Property": "Bien",
     "Model": "Modelo",
     "Quantity": "Cantidad",
-    "Created Bien": "Bien Creado"
+    "Created Property": "Bien Creado",
+    "Updated Property": "Bien Actualizado",
+    "Deleted Property": "Bien Eliminado"
 }

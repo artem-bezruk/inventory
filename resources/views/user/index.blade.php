@@ -315,7 +315,6 @@
 						setTimeout(function () {
 							listaUsuarios();
 						}, 1700)
-						console.log(response, statusText, jqXHR)
 					})
 					.fail(function (e) {
 						if (e.responseJSON.mensaje) {

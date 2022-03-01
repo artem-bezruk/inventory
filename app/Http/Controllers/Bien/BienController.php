@@ -39,7 +39,7 @@ class BienController extends Controller
                     'capacidad' => $capacidad,
                     'urlMostrar' => route('bien.show', ['locale' => app()->getLocale(), 'bien' => $bien->id]),
                     'urlEditar' => route('bien.edit', ['locale' => app()->getLocale(), 'bien' => $bien->id]),
-                    'urlEliminar' => ''
+                    'urlEliminar' => route('bien.destroy', ['locale' => app()->getLocale(), 'bien' => $bien->id])
                 ];
             }
             if (empty($this->respuesta["data"])) {
@@ -90,7 +90,7 @@ class BienController extends Controller
             $bitacora = new \App\Bitacora();
             $modulo = \App\Modulo::where('modulo', 'bienes')->first();
             $accion = \App\Accion::where('accion', 'Create')->first();
-            $descripcion = "Created Bien";
+            $descripcion = "Created Property";
             $bitacora->registro($modulo->id, $bien->id, $accion->id, \Request::ip(), $descripcion);
             $httpStatus = HttpStatus::CREATED;
             $this->respuesta["mensaje"] = HttpStatus::CREATED();
@@ -204,7 +204,7 @@ class BienController extends Controller
                 $bitacora = new \App\Bitacora();
                 $modulo = \App\Modulo::where('modulo', 'bienes')->first();
                 $accion = \App\Accion::where('accion', 'Update')->first();
-                $descripcion = "Updated Bien";
+                $descripcion = "Updated Property";
                 $bitacora->registro($modulo->id, $bien->id, $accion->id, \Request::ip(), $descripcion);
                 $httpStatus = HttpStatus::OK;
                 $this->respuesta["mensaje"] = HttpStatus::OK();
@@ -218,7 +218,25 @@ class BienController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $bien = Bien::find($id);
+        $fecha = new \Datetime('now');
+        try {
+            $bien->eliminado = 1;
+            $bien->fecha_modificacion = $fecha;
+            $bien->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'bienes')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Property";
+            $bitacora->registro($modulo->id, $bien->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = $e->getMessage();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
 }

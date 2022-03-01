@@ -8,3 +8,4 @@ Route::get($uri . '/list', $controller . 'bienes')->name('bien.list')->middlewar
 Route::get($uri. '/{bien}/show', $controller . 'show')->name('bien.show')->middleware('checkRol:bienes,r');
 Route::get($uri . '/{bien}/edit', $controller . 'edit')->name('bien.edit')->middleware('checkRol:bienes,r-u');
 Route::put($uri . '/{bien}', $controller . 'update')->name('bien.update')->middleware('checkRol:bienes,r-u');
+Route::delete($uri . '/{bien}', $controller . 'destroy')->name('bien.destroy')->middleware('checkRol:bienes,r-d');

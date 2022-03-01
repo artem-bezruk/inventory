@@ -116,7 +116,6 @@
 						eliminar = '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="{{ __('Delete') }}" onclick="eliminarBien(' + "'" + element.urlEliminar + "'" + ')"><i class="fas fa-trash-alt"></i></button>';
 						opciones = divBotonOpen + mostrar + editar + eliminar + divBotonClose;
 						element.opciones = opciones;
-						// element.opciones = '';
 						data.push(element);
 					});
 					crearTabla(locale, 'tabla', data, columns);
@@ -281,7 +280,67 @@
 		}
 		function eliminarBien (url)
 		{
-			alert("eliminar " + url);
+			Swal.fire({
+				title: "{{ __('Are you sure?') }}",
+				html: "{{ __('You won\'t be able to revert this!') }}",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: "{{ __('Yes, delete it!') }}",
+				cancelButtonText: "{{ __('Cancel') }}"
+			})
+			.then((result) => {
+				if (result.value) {
+					$.ajax({
+						type: 'DELETE',
+						url: url,
+						headers: {
+					        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+					    },
+						cache: false,
+						beforeSend: function ()
+						{
+							Swal.fire({
+								type: 'info',
+								title: "{{ __('Sending information') }}",
+								showConfirmButton: false,
+								allowEscapeKey: false,
+								allowOutsideClick: false,
+							})
+						}
+					})
+					.done(function (response, statusText, jqXHR) {
+						Swal.fire({
+							type: 'info',
+							title: response.mensaje,
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+						setTimeout(function () {
+							listaBienes();
+						}, 1700)
+					})
+					.fail(function (e) {
+						if (e.responseJSON.mensaje) {
+							mensaje = e.responseJSON.mensaje;
+						}
+						else {
+							mensaje = "{{ __('Oops! Something went wrong') }}";
+						}
+						Swal.fire({
+							type: 'error',
+							title: mensaje,
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+					})
+				}
+			})
 		}
 	</script>
 @endsection
