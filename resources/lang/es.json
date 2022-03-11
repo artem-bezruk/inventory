@@ -152,5 +152,8 @@
     "Quantity": "Cantidad",
     "Created Property": "Bien Creado",
     "Updated Property": "Bien Actualizado",
-    "Deleted Property": "Bien Eliminado"
+    "Deleted Property": "Bien Eliminado",
+    "Actives": "Activos",
+    "Inactives": "Inactivos",
+    "Last Activities": "Ultimas Actividades"
 }
