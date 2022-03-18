@@ -217,7 +217,6 @@
 						Swal.close();
 					},700);
 				}
-				console.log(response)
 			})
 			.fail(function (e) {
 				Swal.fire({

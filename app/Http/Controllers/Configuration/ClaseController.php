@@ -68,8 +68,24 @@ class ClaseController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $clase = Clase::find($id);
+            if (!empty($clase)) {
+                $this->respuesta["data"] = (object) [
+                    "clase" => __($clase->clase)
+                ];
+                return response()->view('clase.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
