@@ -134,7 +134,23 @@ class ClaseController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $clase = Clase::find($id);
+        try {
+            $clase->eliminado = 1;
+            $clase->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'clases')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Class";
+            $bitacora->registro($modulo->id, $clase->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = $e->getMessage();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
 }

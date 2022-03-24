@@ -270,7 +270,67 @@
 		}
 		function eliminarClase (url)
 		{
-			alert(url)
+			Swal.fire({
+				title: "{{ __('Are you sure?') }}",
+				html: "{{ __('You won\'t be able to revert this!') }}",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: "{{ __('Yes, delete it!') }}",
+				cancelButtonText: "{{ __('Cancel') }}"
+			})
+			.then((result) => {
+				if (result.value) {
+					$.ajax({
+						type: 'DELETE',
+						url: url,
+						headers: {
+					        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+					    },
+						cache: false,
+						beforeSend: function ()
+						{
+							Swal.fire({
+								type: 'info',
+								title: "{{ __('Sending information') }}",
+								showConfirmButton: false,
+								allowEscapeKey: false,
+								allowOutsideClick: false,
+							})
+						}
+					})
+					.done(function (response, statusText, jqXHR) {
+						Swal.fire({
+							type: 'success',
+							title: response.mensaje,
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+						setTimeout(function () {
+							listaClases();
+						}, 1700)
+					})
+					.fail(function (e) {
+						if (e.responseJSON.mensaje) {
+							mensaje = e.responseJSON.mensaje;
+						}
+						else {
+							mensaje = "{{ __('Oops! Something went wrong') }}";
+						}
+						Swal.fire({
+							type: 'error',
+							title: mensaje,
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+					})
+				}
+			})
 		}
 	</script>
 @endsection

@@ -311,7 +311,7 @@
 					})
 					.done(function (response, statusText, jqXHR) {
 						Swal.fire({
-							type: 'info',
+							type: 'success',
 							title: response.mensaje,
 							showConfirmButton: false,
 							allowEscapeKey: false,
