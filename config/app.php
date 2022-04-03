@@ -1,6 +1,6 @@
 <?php
 return [
-    'version' => '0.4',
+    'version' => '0.5',
     'name' => 'Inventaris',
     'env' => env('APP_ENV', 'production'),
     'debug' => (bool) env('APP_DEBUG', false),
