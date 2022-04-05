@@ -11,30 +11,30 @@ class HttpStatus
 	public const ERROR = 500;
 	public static function OK ()
 	{
-		return  __('http.200');
+		return __('http.200');
 	}
 	public static function CREATED ()
 	{
-		return  __('http.201');
+		return __('http.201');
 	}
 	public static function NOCONTENT ()
 	{
-		return  __('http.204');
+		return __('http.204');
 	}
 	public static function BADREQUEST ()
 	{
-		return  __('http.400');
+		return __('http.400');
 	}
 	public static function FORBIDDEN ()
 	{
-		return  __('http.403');
+		return __('http.403');
 	}
 	public static function TEAPOT ()
 	{
-		return  __('http.418');
+		return __('http.418');
 	}
 	public static function ERROR ()
 	{
-		return  __('http.500');
+		return __('http.500');
 	}
 }

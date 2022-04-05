@@ -102,7 +102,7 @@ class ClaseController extends Controller
                 $httpStatus = HttpStatus::NOCONTENT;
             }
         } catch (\Exception $e) {
-            $this->respuesta["message"] = $e->getMessage() ?? HttpStatus::ERROR();
+            $this->respuesta["message"] = HttpStatus::ERROR();
             $httpStatus = HttpStatus::ERROR;
         }
         return response()->json($this->respuesta, $httpStatus);
@@ -149,7 +149,7 @@ class ClaseController extends Controller
             $this->respuesta["mensaje"] = HttpStatus::OK();
         } catch (\Exception $e) {
             $httpStatus = HttpStatus::ERROR;
-            $this->respuesta["mensaje"] = $e->getMessage();
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
         }
         return response()->json($this->respuesta, $httpStatus);
     }
