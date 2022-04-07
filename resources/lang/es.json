@@ -159,5 +159,9 @@
     "Classes List": "Lista de Clases",
     "Created Class": "Clase Creada",
     "Updated Class": "Clase Actualizada",
-    "Deleted Class": "Clase Eliminada"
+    "Deleted Class": "Clase Eliminada",
+    "Subclasses List": "Lista de Subclases",
+    "Created Subclass": "Subclase Creada",
+    "Updated Subclass": "Subclase Actualizada",
+    "Deleted Subclass": "Subclase Eliminada"
 }

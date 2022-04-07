@@ -74,8 +74,25 @@ class SubclaseController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
 	}
-	public function show($id)
+	public function show($locale, $id)
 	{
+		try {
+			$subclase = Subclase::find($id);
+			if (!empty($subclase)) {
+                $this->respuesta["data"] = (object) [
+                    "clase" => __($subclase->clase()->clase),
+                    "subclase" => __($subclase->sub_clase)
+                ];
+                return response()->view('subclase.mostrar', $this->respuesta, HttpStatus::OK);
+			}
+			else {
+				$httpStatus = HttpStatus::NOCONTENT;
+			}
+		} catch (\Exception $e) {
+        	$this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+		}
+		return response()->json($this->respuesta, $httpStatus);
 	}
 	public function edit($id)
 	{
