@@ -94,11 +94,58 @@ class SubclaseController extends Controller
 		}
 		return response()->json($this->respuesta, $httpStatus);
 	}
-	public function edit($id)
+	public function edit($locale, $id)
 	{
+		try {
+            $subclase = Subclase::find($id);
+            if (!empty($subclase)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $subclase->id,
+                    'clase' => $subclase->clase_id,
+                    'subclase' => $subclase->sub_clase,
+                ];
+                $this->respuesta["extras"] = (object) [
+                	"clases" => \App\Clase::where('eliminado', 0)->get(),
+                ];
+                return response()->view('subclase.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = $e->getMessage() ?? HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
 	}
-	public function update(Request $request, $id)
+	public function update(Request $request, $locale, $id)
 	{
+		Validator::make($request->all(), [
+            'clase' => ['required', 'numeric'],
+            'subclase' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+        ])->validate();
+        $subclase = Subclase::find($id);
+        $subclase->clase_id = $request->clase;
+        $subclase->sub_clase = $request->subclase;
+        try {
+            if ($subclase->isDirty()) {
+                $subclase->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'sub_clases')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Subclass";
+                $bitacora->registro($modulo->id, $subclase->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
 	}
 	public function destroy($id)
 	{

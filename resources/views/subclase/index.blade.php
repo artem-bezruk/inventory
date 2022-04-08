@@ -270,7 +270,7 @@
 				})
 			});
 		}
-		function eliminarSublase (url)
+		function eliminarSubclase (url)
 		{
 			Swal.fire({
 				title: "{{ __('Are you sure?') }}",
