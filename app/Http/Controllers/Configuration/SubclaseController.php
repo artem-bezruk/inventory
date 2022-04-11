@@ -147,8 +147,24 @@ class SubclaseController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
 	}
-	public function destroy($id)
+	public function destroy($locale, $id)
 	{
+		$subclase = Subclase::find($id);
+        try {
+            $subclase->eliminado = 1;
+            $subclase->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'sub_clases')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Subclass";
+            $bitacora->registro($modulo->id, $subclase->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
 	}
 	public function subclases ($locale, $clase)
 	{
