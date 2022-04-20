@@ -23,7 +23,7 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label class="required" for="clase">{{ __('Class') }}</label>
-				<select class="form-control" name="clase" id="selectClase" onchange="subclases(this.value)">
+				<select class="form-control" name="clase" id="selectClase">
 					<option value="" selected disabled>{{ __('Choose') }} {{ __('Class') }}</option>
 					@foreach ($extras->clases as $clase)
 						@if ($data->clase == $clase->id)
