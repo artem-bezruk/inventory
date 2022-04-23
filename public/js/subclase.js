@@ -71,8 +71,8 @@ function validacionRespuesta (errors)
 	}
 	else {
 		subclase.removeClass('is-invalid').addClass('is-valid');
-		$('#claseEmpty').hide();
-		$('#claseNotOnly').hide();
-		$('#claseResponse').hide();
+		$('#subclaseEmpty').hide();
+		$('#subclaseNotOnly').hide();
+		$('#subclaseResponse').hide();
 	}
 }

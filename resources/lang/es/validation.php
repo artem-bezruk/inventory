@@ -164,6 +164,9 @@ return [
             'required' => 'El campo Marca es obligatorio.',
             'numeric' => 'El campo Marca debe ser un número.',
         ],
+        'capacidad' => [
+        	'boolean' => 'El campo debe ser verdadero o falso.'
+        ],
     ],
     'attributes' => [],
 ];

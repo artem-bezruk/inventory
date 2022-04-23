@@ -164,6 +164,9 @@ return [
             'required' => 'The Mark field is required.',
             'numeric' => 'The Mark must be a number.',
         ],
+        'capacidad' => [
+        	'boolean' => 'The field must be true or false.'
+        ],
     ],
     'attributes' => [],
 ];

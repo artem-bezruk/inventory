@@ -46,9 +46,37 @@ class CategoriaController extends Controller
     }
     public function create()
     {
+        $this->respuesta["extras"] = (object) [
+			"clases" => \App\Clase::where('eliminado', 0)->get(),
+		];
+		return response()->view('categoria.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'clase' => ['required', 'numeric'],
+            'subclase' => ['required', 'numeric'],
+            'categoria' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+            'capacidad' => ['boolean'],
+        ])->validate();
+        $categoria = new Categoria;
+        $categoria->sub_clase_id = $request->subclase;
+        $categoria->categoria = $request->categoria;
+        $categoria->ver_capacidad = $request->capacidad ?? false;
+        try {
+        	$categoria->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'categorias')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Category";
+            $bitacora->registro($modulo->id, $categoria->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (\Exception $e) {
+        	$this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
