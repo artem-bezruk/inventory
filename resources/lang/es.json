@@ -168,5 +168,8 @@
     "Created Category": "Categoría Creada",
     "Updated Category": "Categoría Actualizada",
     "Deleted Category": "Categoría Eliminada",
-    "Require capacity?": "¿Requiere capacidad?"
+    "Require capacity?": "¿Requiere capacidad?",
+    "Yes": "Si",
+    "No": "No",
+    "See": "Ver"
 }

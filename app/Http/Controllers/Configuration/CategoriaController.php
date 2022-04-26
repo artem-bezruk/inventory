@@ -78,8 +78,27 @@ class CategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $categoria = Categoria::find($id);
+            if (!empty($categoria)) {
+                $this->respuesta["data"] = (object) [
+                    "clase" => __($categoria->subclase()->clase()->clase),
+                    "subclase" => __($categoria->subclase()->sub_clase),
+                    "categoria" => __($categoria->categoria),
+                    "ver_capacidad" => $categoria->ver_capacidad,
+                ];
+                return response()->view('categoria.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
