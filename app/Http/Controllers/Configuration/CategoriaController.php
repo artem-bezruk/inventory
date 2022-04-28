@@ -100,11 +100,64 @@ class CategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $categoria = Categoria::find($id);
+            if (!empty($categoria)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $categoria->id,
+                    'clase' => $categoria->subclase()->clase()->id,
+                    'subclase' => $categoria->sub_clase_id,
+                    'categoria' => $categoria->categoria,
+                    'capacidad' => $categoria->ver_capacidad
+                ];
+                $this->respuesta["extras"] = (object) [
+                	'clases' => \App\Clase::where('eliminado', 0)->get(),
+                	'subclases' => \App\Subclase::where('eliminado', 0)->where('clase_id', $categoria->subclase()->clase_id)->get(),
+                ];
+                return response()->view('categoria.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'clase' => ['required', 'numeric'],
+            'subclase' => ['required', 'numeric'],
+            'categoria' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+            'capacidad' => ['boolean'],
+        ])->validate();
+        $categoria = Categoria::find($id);
+        $categoria->sub_clase_id = $request->subclase;
+        $categoria->categoria = $request->categoria;
+        $categoria->ver_capacidad = $request->capacidad ? true : false;
+        try {
+            if ($categoria->isDirty()) {
+                $categoria->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'categorias')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Category";
+                $bitacora->registro($modulo->id, $categoria->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {
