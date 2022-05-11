@@ -15,6 +15,35 @@ class SubcategoriaController extends Controller
     {
         return view('subcategoria.index');
     }
+    public function listaSubcategorias (Request $request)
+    {
+    	try {
+			$all = Subcategoria::where('eliminado', 0)->get();
+			$this->respuesta["data"] = [];
+			foreach ($all as $subcategoria) {
+				$this->respuesta["data"][] = (object) [
+					'id' => $subcategoria->id,
+					'clase' => __($subcategoria->categoria()->subclase()->clase()->clase),
+					'subclase' => __($subcategoria->categoria()->subclase()->sub_clase),
+					'categoria' => __($subcategoria->categoria()->categoria),
+					'subcategoria' => __($subcategoria->sub_categoria),
+					'urlMostrar' => route("subcategoria.show", ['locale' => app()->getLocale(), 'subcategoria' => $subcategoria->id]),
+					'urlEditar' => route("subcategoria.edit", ['locale' => app()->getLocale(), 'subcategoria' => $subcategoria->id]),
+					'urlEliminar' => route("subcategoria.destroy", ['locale' => app()->getLocale(), 'subcategoria' => $subcategoria->id])
+				];
+			}
+			if (empty($this->respuesta["data"])) {
+				$httpStatus = HttpStatus::NOCONTENT;
+			}
+			else {
+				$httpStatus = HttpStatus::OK;
+			}
+		} catch (\Exception $e) {
+			$this->respuesta["mensaje"] = $e->getMessage()?? HttpStatus::ERROR();
+			$httpStatus = HttpStatus::ERROR;
+		}
+		return response()->json($this->respuesta, $httpStatus);
+    }
     public function create()
     {
     }
