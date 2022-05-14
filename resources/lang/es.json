@@ -171,5 +171,9 @@
     "Require capacity?": "¿Requiere capacidad?",
     "Yes": "Si",
     "No": "No",
-    "See": "Ver"
+    "See": "Ver",
+    "Subcategories List": "Lista de Subcategorías",
+    "Created Subcategory": "Subcategoría Creada",
+    "Updated Subcategory": "Subcategoría Actualizada",
+    "Deleted Subcategory": "Subcategoría Eliminada"
 }

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Configuration;
+use Validator;
 use App\Subcategoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,9 +47,36 @@ class SubcategoriaController extends Controller
     }
     public function create()
     {
+        $this->respuesta["extras"] = (object) [
+			"clases" => \App\Clase::where('eliminado', 0)->get(),
+		];
+		return response()->view('subcategoria.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'clase' => ['required', 'numeric'],
+            'subclase' => ['required', 'numeric'],
+            'categoria' => ['required', 'numeric'],
+            'subcategoria' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+        ])->validate();
+        $subcategoria = new Subcategoria;
+        $subcategoria->categoria_id = $request->categoria;
+        $subcategoria->sub_categoria = $request->subcategoria;
+        try {
+        	$subcategoria->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'sub_categorias')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Subcategory";
+            $bitacora->registro($modulo->id, $subcategoria->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (\Exception $e) {
+        	$this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
