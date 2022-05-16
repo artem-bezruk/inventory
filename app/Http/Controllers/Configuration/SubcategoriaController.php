@@ -78,8 +78,27 @@ class SubcategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $subcategoria = Subcategoria::find($id);
+            if (!empty($subcategoria)) {
+                $this->respuesta["data"] = (object) [
+                    "clase" => __($subcategoria->categoria()->subclase()->clase()->clase),
+                    "subclase" => __($subcategoria->categoria()->subclase()->sub_clase),
+                    "categoria" => __($subcategoria->categoria()->categoria),
+                    "subcategoria" => __($subcategoria->sub_categoria)
+                ];
+                return response()->view('subcategoria.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
