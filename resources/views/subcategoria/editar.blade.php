@@ -1,10 +1,11 @@
 @extends('modals.media')
-@section('modal-id', 'crearsubcategoria')
+@section('modal-id', 'editarsubcategoria')
 @section('modal-title')
-	{{ __('Add') }} {{ __('Subcategory') }}
+	{{ __('Edit') }} {{ __('Subcategory') }}
 @endsection
 @section('modal-content')
-	<form id="formCrear" action="{{ route('subcategoria.store', ['locale' => app()->getLocale()]) }}" autocomplete="off">
+	<form  id="formEditar" action="{{ route('subcategoria.update', ['locale' => app()->getLocale(), 'subcategoria' => $data->id]) }}" autocomplete="off">
+		@method('PUT')
 		<div class="form-row">
 			<div class="col-md-12 text-info mb-3" style="font-size: 15px;">
 				<table>
@@ -21,11 +22,15 @@
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-12">
-				<label for="clase" class="required">{{ __('Class') }}</label>
+				<label class="required" for="clase">{{ __('Class') }}</label>
 				<select class="form-control" name="clase" id="selectClase" onchange="subclases(this.value)">
 					<option value="" selected disabled>{{ __('Choose') }} {{ __('Class') }}</option>
 					@foreach ($extras->clases as $clase)
-						<option value="{{ $clase->id }}">{{ __($clase->clase) }}</option>
+						@if ($data->clase == $clase->id)
+							<option value="{{ $clase->id }}" selected>{{ __($clase->clase) }}</option>
+						@else
+							<option value="{{ $clase->id }}">{{ __($clase->clase) }}</option>
+						@endif
 					@endforeach
 				</select>
 				<span class="invalid-feedback" id="claseEmpty" style="display: none;">
@@ -42,8 +47,15 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label class="required" for="subclases">{{ __('Subclass') }}</label>
-				<select class="form-control" name="subclase" id="selectSubclase" disabled onchange="categorias(this.value)">
+				<select class="form-control" name="subclase" id="selectSubclase">
 					<option value="" selected disabled>{{ __('Choose') }} {{ __('Subclass') }}</option>
+					@foreach ($extras->subclases as $subclase)
+						@if ($data->subclase == $subclase->id)
+							<option value="{{ $subclase->id }}" selected>{{ __($subclase->sub_clase) }}</option>
+						@else
+							<option value="{{ $subclase->id }}">{{ __($subclase->sub_clase) }}</option>
+						@endif
+					@endforeach
 				</select>
 				<span class="invalid-feedback" id="subclaseEmpty" style="display: none;">
 					<strong>{{ __('validation.required', ['attribute' => __('Subclass')]) }}</strong>
@@ -59,8 +71,15 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label class="required" for="categorias">{{ __('Category') }}</label>
-				<select class="form-control" name="categoria" id="selectCategoria" disabled>
+				<select class="form-control" name="categoria" id="selectCategoria">
 					<option value="" selected disabled>{{ __('Choose') }} {{ __('Category') }}</option>
+					@foreach ($extras->categorias as $categoria)
+						@if ($data->categoria == $categoria->id)
+							<option value="{{ $categoria->id }}" selected>{{ __($categoria->categoria) }}</option>
+						@else
+							<option value="{{ $categoria->id }}">{{ __($categoria->categoria) }}</option>
+						@endif
+					@endforeach
 				</select>
 				<span class="invalid-feedback" id="categoriaEmpty" style="display: none;">
 					<strong>{{ __('validation.required', ['attribute' => __('Category')]) }}</strong>
@@ -76,7 +95,7 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label class="required" for="subcategorias">{{ __('Subcategory') }}</label>
-				<input type="text" class="form-control" name="subcategoria" id="subcategoria" placeholder="{{ __('Subcategory') }}" onkeypress="return keypressvalidarOnlyLetras(event)">
+				<input type="text" class="form-control" name="subcategoria" id="subcategoria" value="{{ $data->subcategoria }}" placeholder="{{ __('Subcategory') }}" onkeypress="return keypressvalidarOnlyLetras(event)">
 				<span class="invalid-feedback" id="subcategoriaEmpty" style="display: none;">
 					<strong>{{ __('validation.required', ['attribute' => __('Subcategory')]) }}</strong>
 				</span>
@@ -92,7 +111,7 @@
 @endsection
 @section('modal-footer')
 	<button class="btn btn-secondary" data-dismiss="modal" type="button">{{ __('Close') }}</button>
-	<button class="btn btn-primary" id="btnCrear" type="button">{{ __('Create') }}</button>
+	<button class="btn btn-primary" id="btnEditar" type="button">{{ __('Modify') }}</button>
 @endsection
 @section('modal-script')
 	<script src="{{ asset('js/subcategoria.js') }}" type="text/javascript"></script>
@@ -105,10 +124,10 @@
 		var categoriaValido = false;
 		var subcategoria = $('#subcategoria');
 		var subcategoriaValido = false;
-		$('#btnCrear').on('click', function () {
-			$('#formCrear').submit();
+		$('#btnEditar').on('click', function () {
+			$('#formEditar').submit();
 		});
-		$('#formCrear').on('submit', function (e) {
+		$('#formEditar').on('submit', function (e) {
 			e.preventDefault();
 			var data = $(this).serializeArray();
 			validacionForm();
@@ -133,8 +152,18 @@
 					}
 				})
 				.done(function (response, statusText, jqXHR) {
-					if (jqXHR.status == 201) {
-						$("#crearsubcategoria").modal("toggle");
+					if (jqXHR.status == 204) {
+						Swal.fire({
+							type: 'info',
+							title: "{{ __('Nothing to update') }}",
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+					}
+					if (jqXHR.status == 200) {
+						$("#editarsubcategoria").modal("toggle");
 						Swal.fire({
 							type: 'success',
 							title: response.mensaje,
