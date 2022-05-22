@@ -159,8 +159,24 @@ class SubcategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $subcategoria = Subcategoria::find($id);
+        try {
+            $subcategoria->eliminado = 1;
+            $subcategoria->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'sub_categorias')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Subcategory";
+            $bitacora->registro($modulo->id, $subcategoria->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function subcategorias ($locale, $categoria)
     {
