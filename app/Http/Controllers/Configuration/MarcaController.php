@@ -44,9 +44,29 @@ class MarcaController extends Controller
     }
     public function create()
     {
+        return response()->view('marca.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'marca' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+        ])->validate();
+        $marca = new Marca();
+        $marca->marca = $request->marca;
+        try {
+            $marca->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'marcas')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Mark";
+            $bitacora->registro($modulo->id, $marca->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
