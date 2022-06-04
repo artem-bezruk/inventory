@@ -37,7 +37,7 @@ class MarcaController extends Controller
                 $httpStatus = HttpStatus::OK;
             }
         } catch (\Exception $e) {
-            $this->respuesta["mensaje"] = $e->getMessage()?? HttpStatus::ERROR();
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
             $httpStatus = HttpStatus::ERROR;
         }
         return response()->json($this->respuesta, $httpStatus);
@@ -68,8 +68,24 @@ class MarcaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $marca = Marca::find($id);
+            if (!empty($marca)) {
+                $this->respuesta["data"] = (object) [
+                    "marca" => __($marca->marca)
+                ];
+                return response()->view('marca.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
