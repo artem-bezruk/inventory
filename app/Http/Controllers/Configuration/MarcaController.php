@@ -87,11 +87,52 @@ class MarcaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $marca = Marca::find($id);
+            if (!empty($marca)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $marca->id,
+                    'marca' => $marca->marca,
+                ];
+                return response()->view('marca.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'marca' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+        ])->validate();
+        $marca = Marca::find($id);
+        $marca->marca = $request->marca;
+        try {
+        	if ($marca->isDirty()) {
+            	$marca->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'marcas')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Mark";
+            	$bitacora->registro($modulo->id, $marca->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {

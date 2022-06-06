@@ -1,10 +1,11 @@
 @extends('modals.media')
-@section('modal-id', 'crearmarca')
+@section('modal-id', 'editarmarca')
 @section('modal-title')
-	{{ __('Add') }} {{ __('Mark') }}
+	{{ __('Edit') }} {{ __('Mark') }}
 @endsection
 @section('modal-content')
-	<form id="formCrear" action="{{ route('marca.store', ['locale' => app()->getLocale()]) }}" autocomplete="off">
+	<form  id="formEditar" action="{{ route('marca.update', ['locale' => app()->getLocale(), 'marca' => $data->id]) }}" autocomplete="off">
+		@method('PUT')
 		<div class="form-row">
 			<div class="col-md-12 text-info mb-3" style="font-size: 15px;">
 				<table>
@@ -22,7 +23,7 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label for="marca" class="required">{{ __('Mark') }}</label>
-				<input type="text" class="form-control" name="marca" id="marca" placeholder="{{ __('Mark') }}" onkeypress="return keypressvalidarOnlyLetras(event)">
+				<input type="text" class="form-control" name="marca" id="marca" placeholder="{{ __('Mark') }}" value="{{ $data->marca }}" onkeypress="return keypressvalidarOnlyLetras(event)">
 				<span class="invalid-feedback" id="marcaEmpty" style="display: none;">
 					<strong>{{ __('validation.required', ['attribute' => __('Mark')]) }}</strong>
 				</span>
@@ -38,17 +39,17 @@
 @endsection
 @section('modal-footer')
 	<button class="btn btn-secondary" data-dismiss="modal" type="button">{{ __('Close') }}</button>
-	<button class="btn btn-primary" id="btnCrear" type="button">{{ __('Create') }}</button>
+	<button class="btn btn-primary" id="btnEditar" type="button">{{ __('Modify') }}</button>
 @endsection
 @section('modal-script')
 	<script src="{{ asset('js/marca.js') }}" type="text/javascript"></script>
 	<script type="text/javascript">
 		var marca = $('#marca');
 		var marcaValido = false;
-		$('#btnCrear').on('click', function () {
-			$('#formCrear').submit();
+		$('#btnEditar').on('click', function () {
+			$('#formEditar').submit();
 		});
-		$('#formCrear').on('submit', function (e) {
+		$('#formEditar').on('submit', function (e) {
 			e.preventDefault();
 			var data = $(this).serializeArray();
 			validacionForm();
@@ -73,8 +74,18 @@
 					}
 				})
 				.done(function (response, statusText, jqXHR) {
-					if (jqXHR.status == 201) {
-						$("#crearmarca").modal("toggle");
+					if (jqXHR.status == 204) {
+						Swal.fire({
+							type: 'info',
+							title: "{{ __('Nothing to update') }}",
+							showConfirmButton: false,
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+							timer: 1700
+						})
+					}
+					if (jqXHR.status == 200) {
+						$("#editarmarca").modal("toggle");
 						Swal.fire({
 							type: 'success',
 							title: response.mensaje,
