@@ -11,6 +11,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('user', '[0-9]+');
         Route::pattern('bien', '[0-9]+');
         Route::pattern('clase', '[0-9]+');
+        Route::pattern('subclase', '[0-9]+');
+        Route::pattern('categoria', '[0-9]+');
+        Route::pattern('subcategoria', '[0-9]+');
+        Route::pattern('marca', '[0-9]+');
+        Route::pattern('capacidad', '[0-9]+');
         parent::boot();
     }
     public function map()
