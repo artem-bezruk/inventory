@@ -44,9 +44,34 @@ class CapacidadController extends Controller
     }
     public function create()
     {
+    	$this->respuesta["extras"] = (object) [
+			"nomenclaturas" => \App\Nomenclatura::where("eliminado", 0)->get(),
+		];
+        return response()->view('capacidad.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'capacidad' => ['required', 'integer'],
+            'nomenclatura' => ['required', 'numeric'],
+        ])->validate();
+        $capacidad = new Capacidad();
+        $capacidad->capacidad = $request->capacidad;
+        $capacidad->nomenclatura_id = $request->nomenclatura;
+        try {
+            $capacidad->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'capacidades')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Capacity";
+            $bitacora->registro($modulo->id, $capacidad->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
