@@ -73,8 +73,25 @@ class CapacidadController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $capacidad = Capacidad::find($id);
+            if (!empty($capacidad)) {
+                $this->respuesta["data"] = (object) [
+                    "capacidad" => __($capacidad->capacidad),
+                    "nomenclatura" => __($capacidad->nomenclatura()->nomenclatura) . " (" . $capacidad->nomenclatura()->abreviatura . ")"
+                ];
+                return response()->view('capacidad.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
