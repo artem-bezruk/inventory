@@ -252,7 +252,7 @@
 				if (jqXHR.status == 200) {
 					setTimeout(function () {
 						$("#responseModal").html(response)
-						$("#editarclase").modal("toggle")
+						$("#editarcapacidad").modal("toggle")
 						Swal.close();
 					},700);
 				}
