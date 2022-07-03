@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers\Configuration;
+use Validator;
+use App\Estatu;
+use App\Enums\HttpStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class EstatuController extends Controller
@@ -11,5 +14,49 @@ class EstatuController extends Controller
     public function index ()
     {
     	return view('estatu.index');
+    }
+    public function estatus(Request $request)
+    {
+        try {
+            $all = Estatu::where('eliminado', 0)->get();
+            $this->respuesta["data"] = [];
+            foreach ($all as $estatu) {
+                $this->respuesta["data"][] = (object) [
+                    'id' => $estatu->id,
+                    'estado' => __($estatu->estado),
+                    'urlMostrar' => route("estatu.show", ['locale' => app()->getLocale(), 'estatu' => $estatu->id]),
+                    'urlEditar' => route("estatu.edit", ['locale' => app()->getLocale(), 'estatu' => $estatu->id]),
+                    'urlEliminar' => route("estatu.destroy", ['locale' => app()->getLocale(), 'estatu' => $estatu->id])
+                ];
+            }
+            if (empty($this->respuesta["data"])) {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+            else {
+                $httpStatus = HttpStatus::OK;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
+    }
+    public function create()
+    {
+    }
+    public function store(Request $request)
+    {
+    }
+    public function show($id)
+    {
+    }
+    public function edit($id)
+    {
+    }
+    public function update(Request $request, $id)
+    {
+    }
+    public function destroy($id)
+    {
     }
 }
