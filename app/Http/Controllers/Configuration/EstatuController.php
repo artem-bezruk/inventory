@@ -68,8 +68,24 @@ class EstatuController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
 	}
-	public function show($id)
+	public function show($locale, $id)
 	{
+		try {
+            $estatu = Estatu::find($id);
+            if (!empty($estatu)) {
+                $this->respuesta["data"] = (object) [
+                    "estatu" => __($estatu->estado)
+                ];
+                return response()->view('estatu.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
 	}
 	public function edit($id)
 	{
