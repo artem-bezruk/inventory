@@ -134,7 +134,23 @@ class EstatuController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
 	}
-	public function destroy($id)
+	public function destroy($locale, $id)
 	{
+		$estatu = Estatu::find($id);
+        try {
+            $estatu->eliminado = 1;
+            $estatu->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'estatus')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Statu";
+            $bitacora->registro($modulo->id, $estatu->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
 	}
 }
