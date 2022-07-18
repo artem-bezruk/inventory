@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class GeneroController extends Controller
 {
+	protected $respuesta = [];
     public function __construct()
     {
         $this->middleware('auth');
@@ -43,9 +44,29 @@ class GeneroController extends Controller
     }
     public function create()
     {
+        return response()->view('genero.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+    	Validator::make($request->all(), [
+            'genero' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+        ])->validate();
+        $genero = new Genero();
+        $genero->genero = $request->genero;
+        try {
+            $genero->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'generos')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Gender";
+            $bitacora->registro($modulo->id, $genero->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
