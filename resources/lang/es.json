@@ -192,5 +192,10 @@
     "Genders List": "Lista de Géneros",
     "Created Gender": "Género Creado",
     "Updated Gender": "Género Actualizado",
-    "Deleted Gender": "Género Eliminado"
+    "Deleted Gender": "Género Eliminado",
+    "Modules List": "Lista de Módulos",
+    "Created Module": "Módulo Creado",
+    "Updated Module": "Módulo Actualizado",
+    "Deleted Module": "Módulo Eliminado",
+    "It is filterable?": "¿Es filtrable?"
 }
