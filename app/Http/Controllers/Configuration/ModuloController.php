@@ -71,8 +71,25 @@ class ModuloController extends Controller
     	}
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $modulo = Modulo::find($id);
+            if (!empty($modulo)) {
+                $this->respuesta["data"] = (object) [
+					"modulo" => __($modulo->modulo),
+					"filtrable" => $modulo->filtrable ? __("Yes") : __('No'),
+                ];
+                return response()->view('modulo.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
