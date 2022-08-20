@@ -31,7 +31,7 @@
 					<strong>{{ __('validation.regex', ['attribute' => __('Module')]) }}</strong>
 				</span>
 				<span class="invalid-feedback" id="moduloResponse" style="display: none;">
-					<strong id="moduleResponseTexto"></strong>
+					<strong id="moduloResponseTexto"></strong>
 				</span>
 			</div>
 		</div>

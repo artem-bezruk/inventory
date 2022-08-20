@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class ModuloController extends Controller
 {
-    protected $respuesta = [];
+	protected $respuesta = [];
     public function __construct()
     {
         $this->middleware('auth');

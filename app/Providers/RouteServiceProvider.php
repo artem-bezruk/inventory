@@ -19,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
 		Route::pattern('estatu', '[0-9]+');
 		Route::pattern('genero', '[0-9]+');
 		Route::pattern('modulo', '[0-9]+');
+		Route::pattern('nomenclatura', '[0-9]+');
 		parent::boot();
 	}
 	public function map()
