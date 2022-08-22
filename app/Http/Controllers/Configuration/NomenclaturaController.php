@@ -45,9 +45,31 @@ class NomenclaturaController extends Controller
 	}
     public function create()
     {
+        return response()->view('nomenclatura.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+		Validator::make($request->all(), [
+            'nomenclatura' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+            'abreviatura' => ['required', 'min:2', 'max:5'],
+		])->validate();
+		$nomenclatura = new Nomenclatura();
+		$nomenclatura->nomenclatura = $request->nomenclatura;
+		$nomenclatura->abreviatura = $request->abreviatura;
+		try {
+            $nomenclatura->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'nomenclaturas')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Nomenclature";
+            $bitacora->registro($modulo->id, $nomenclatura->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+    	} catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+    	}
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
