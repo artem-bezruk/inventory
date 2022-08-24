@@ -1,18 +1,18 @@
 @extends('modals.media')
 @section('modal-id', 'mostrar')
 @section('modal-title')
-	{{ __('Show') }} {{ __('Module') }}
+	{{ __('Show') }} {{ __('Nomenclature') }}
 @endsection
 @section('modal-content')
 	<table>
 		<tbody id="muestraData">
 			<tr>
-				<th>{{ __('Module') }}</th>
-				<td>{{ $data->modulo }}</td>
+				<th>{{ __('Nomenclature') }}</th>
+				<td>{{ $data->nomenclatura }}</td>
 			</tr>
 			<tr>
-				<th>{{ __('It is filterable?') }}</th>
-				<td>{{ $data->filtrable }}</td>
+				<th>{{ __('Abbreviation') }}</th>
+				<td>{{ $data->abreviatura }}</td>
 			</tr>
 		</tbody>
 	</table>
