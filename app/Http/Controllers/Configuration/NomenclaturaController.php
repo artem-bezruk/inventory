@@ -91,11 +91,55 @@ class NomenclaturaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $nomenclatura = Nomenclatura::find($id);
+            if (!empty($nomenclatura)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $nomenclatura->id,
+					'nomenclatura' => $nomenclatura->nomenclatura,
+					'abreviatura' => $nomenclatura->abreviatura,
+                ];
+                return response()->view('nomenclatura.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'nomenclatura' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+            'abreviatura' => ['required', 'min:2', 'max:5'],
+		])->validate();
+		$nomenclatura = Nomenclatura::find($id);
+		$nomenclatura->nomenclatura = $request->nomenclatura;
+		$nomenclatura->abreviatura = $request->abreviatura;
+		try {
+            if ($nomenclatura->isDirty()) {
+                $nomenclatura->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'nomenclaturas')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Nomenclature";
+                $bitacora->registro($modulo->id, $nomenclatura->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {

@@ -16,9 +16,9 @@
 			<div class="card">
 				<div class="card-header">
 					<div class="text-left">
-						<h3 class="card-title">{{ __('Modules List') }}</h3>
+						<h3 class="card-title">{{ __('Nomenclature List') }}</h3>
 					</div>
-					@if (session()->get('modulos')->modulos->c)
+					@if (session()->get('modulos')->nomenclaturas->c)
 						<div class="text-right">
 							<button type="button" class="btn btn-primary" onclick="crearNomenclatura()"><i class="fas fa-plus"></i><span class="d-none d-md-inline">&nbsp;&nbsp;{{ __('Add') }}</span></button>
 						</div>
