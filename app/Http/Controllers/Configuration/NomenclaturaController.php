@@ -141,7 +141,23 @@ class NomenclaturaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $nomenclatura = Nomenclatura::find($id);
+        try {
+            $nomenclatura->eliminado = 1;
+            $nomenclatura->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'nomenclaturas')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Nomenclature";
+            $bitacora->registro($modulo->id, $nomenclatura->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
 }
