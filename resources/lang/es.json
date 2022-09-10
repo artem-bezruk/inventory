@@ -206,5 +206,7 @@
 	"Roles List": "Lista de Roles",
 	"Created Rol": "Rol Creado",
 	"Updated Rol": "Rol Actualizado",
-	"Deleted Rol": "Rol Eliminado"
+	"Deleted Rol": "Rol Eliminado",
+	"The lower the number, the higher the priority": "A menor número, mayor sera la prioridad",
+	"Priority": "Prioridad"
 }

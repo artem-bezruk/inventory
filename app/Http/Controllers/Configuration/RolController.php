@@ -46,9 +46,33 @@ class RolController extends Controller
 	}
     public function create()
     {
+        return response()->view('rol.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'rol' => ['required', 'regex:/^([a-zA-Z]+(.*))+$/'],
+			'prioridad' => ['required', 'numeric', 'min:0', 'max:99', 'unique:roles,prioridad'],
+			'descripcion' => ['nullable', 'regex:/^([a-zA-Z-Z\u00D1\u00F1\u00C1\u00E1\u00C9\u00E9\u00CD\u00ED\u00D3\u00F3\u00DA\u00FAs\s]|[0-9]|-|_|&|%|.|,)*$/'],
+		])->validate();
+		$rol = new Rol();
+		$rol->rol = $request->rol;
+		$rol->prioridad = $request->prioridad;
+		$rol->descripcion = $request->descripcion;
+		try {
+            $rol->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'modulos')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Module";
+            $bitacora->registro($modulo->id, $rol->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+    	} catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+    	}
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
