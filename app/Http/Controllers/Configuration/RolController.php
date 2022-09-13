@@ -74,8 +74,26 @@ class RolController extends Controller
     	}
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($local, $id)
     {
+        try {
+            $rol = Rol::find($id);
+            if (!empty($rol)) {
+                $this->respuesta["data"] = (object) [
+					"rol" => __($rol->rol),
+					"prioridad" => $rol->prioridad,
+					"descripcion" => __($rol->descripcion),
+                ];
+                return response()->view('rol.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
