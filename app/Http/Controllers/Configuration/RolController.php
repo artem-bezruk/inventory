@@ -62,9 +62,9 @@ class RolController extends Controller
 		try {
             $rol->save();
             $bitacora = new \App\Bitacora();
-            $modulo = \App\Modulo::where('modulo', 'modulos')->first();
+            $modulo = \App\Modulo::where('modulo', 'roles')->first();
             $accion = \App\Accion::where('accion', 'Create')->first();
-            $descripcion = "Created Module";
+            $descripcion = "Created Rol";
             $bitacora->registro($modulo->id, $rol->id, $accion->id, \Request::ip(), $descripcion);
             $httpStatus = HttpStatus::CREATED;
             $this->respuesta["mensaje"] = HttpStatus::CREATED();
@@ -132,9 +132,9 @@ class RolController extends Controller
             if ($rol->isDirty()) {
                 $rol->save();
                 $bitacora = new \App\Bitacora();
-                $modulo = \App\Modulo::where('modulo', 'modulos')->first();
+                $modulo = \App\Modulo::where('modulo', 'roles')->first();
                 $accion = \App\Accion::where('accion', 'Update')->first();
-                $descripcion = "Updated Module";
+                $descripcion = "Updated Rol";
                 $bitacora->registro($modulo->id, $rol->id, $accion->id, \Request::ip(), $descripcion);
                 $httpStatus = HttpStatus::OK;
                 $this->respuesta["mensaje"] = HttpStatus::OK();
@@ -148,7 +148,23 @@ class RolController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($local, $id)
     {
+        $rol = Rol::find($id);
+        try {
+            $rol->eliminado = 1;
+            $rol->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'roles')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Rol";
+            $bitacora->registro($modulo->id, $rol->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
 }
