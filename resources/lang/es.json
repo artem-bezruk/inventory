@@ -208,5 +208,6 @@
 	"Updated Rol": "Rol Actualizado",
 	"Deleted Rol": "Rol Eliminado",
 	"The lower the number, the higher the priority": "A menor número, mayor sera la prioridad",
-	"Priority": "Prioridad"
+	"Priority": "Prioridad",
+	"The relationship between Module and Rol already exists": "La relacion entre Modulo y Rol ya existe"
 }

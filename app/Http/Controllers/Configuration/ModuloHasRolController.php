@@ -45,9 +45,48 @@ class ModuloHasRolController extends Controller
 	}
     public function create()
     {
+		$this->respuesta["extras"] = (object) [
+			"modulos" => \App\Modulo::where('eliminado', 0)->get(),
+			"roles" => \App\Rol::where('eliminado', 0)->get(),
+		];
+        return response()->view('modulorol.crear', $this->respuesta, HttpStatus::OK);
     }
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+			'modulo' => ['required', 'numeric'],
+			'rol' => ['required', 'numeric'],
+			'crear' => ['boolean'],
+			'mostrar' => ['boolean', 'required_with:crear, editar, eliminar'],
+			'editar' => ['boolean'],
+			'eliminar' => ['boolean'],
+		])->validate();
+		$existe = ModuloByRol::where('modulo_id', $request->modulo)->where('rol_id', $request->rol)->get();
+		if ($existe->isNotEmpty()) {
+			$this->respuesta["mensaje"] = __('The relationship between Module and Rol already exists');
+			return response()->json($this->respuesta, HttpStatus::BADREQUEST);
+		}
+		$modulorol = new ModuloByRol();
+		$modulorol->modulo_id = $request->modulo;
+		$modulorol->rol_id = $request->rol;
+		$modulorol->create = $request->crear ?? 0;
+		$modulorol->read = $request->mostrar ?? 0;
+		$modulorol->update = $request->editar ?? 0;
+		$modulorol->delete = $request->eliminar ?? 0;
+		try {
+            $modulorol->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'modulos_has_roles')->first();
+            $accion = \App\Accion::where('accion', 'Create')->first();
+            $descripcion = "Created Module by Rol";
+            $bitacora->registro($modulo->id, $modulorol->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::CREATED;
+            $this->respuesta["mensaje"] = HttpStatus::CREATED();
+    	} catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+    	}
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function show($id)
     {
