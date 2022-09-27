@@ -88,8 +88,29 @@ class ModuloHasRolController extends Controller
     	}
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $modulorol = ModuloByRol::find($id);
+            if (!empty($modulorol)) {
+                $this->respuesta["data"] = (object) [
+					"modulo" => __($modulorol->modulo()->modulo),
+					"rol" => $modulorol->rol()->rol,
+					"crear" => $modulorol->create ? __("Yes") : __("No"),
+					"mostrar" => $modulorol->read ? __("Yes") : __("No"),
+					"editar" => $modulorol->update ? __("Yes") : __("No"),
+					"eliminar" => $modulorol->delete ? __("Yes") : __("No"),
+                ];
+                return response()->view('modulorol.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
