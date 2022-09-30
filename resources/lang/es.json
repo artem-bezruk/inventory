@@ -209,5 +209,10 @@
 	"Deleted Rol": "Rol Eliminado",
 	"The lower the number, the higher the priority": "A menor número, mayor sera la prioridad",
 	"Priority": "Prioridad",
-	"The relationship between Module and Rol already exists": "La relacion entre Modulo y Rol ya existe"
+	"The relationship between Module and Rol already exists": "La relacion entre Modulo y Rol ya existe",
+	"Modules by Roles List": "Lista de Modulos por Roles",
+	"Created Module by Rol": "Modulo por Rol Creado",
+	"Updated Module by Rol": "Modulo por Rol Actualizado",
+	"Deleted Module by Rol": "Modulo por Rol Eliminado",
+	"Permissions": "Permisos"
 }

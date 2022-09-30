@@ -112,11 +112,71 @@ class ModuloHasRolController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $modulorol = ModuloByRol::find($id);
+            if (!empty($modulorol)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $modulorol->id,
+					'modulo' => $modulorol->modulo_id,
+					'rol' => $modulorol->rol_id,
+					'crear' => $modulorol->create,
+					'mostrar' => $modulorol->read,
+					'editar' => $modulorol->update,
+					'eliminar' => $modulorol->delete,
+				];
+				$this->respuesta["extras"] = (object) [
+					"modulos" => \App\Modulo::where('eliminado', 0)->get(),
+					"roles" => \App\Rol::where('eliminado', 0)->get(),
+				];
+                return response()->view('modulorol.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+			'modulo' => ['required', 'numeric'],
+			'rol' => ['required', 'numeric'],
+			'crear' => ['boolean'],
+			'mostrar' => ['boolean', 'required_with:crear, editar, eliminar'],
+			'editar' => ['boolean'],
+			'eliminar' => ['boolean'],
+		])->validate();
+		$modulorol = ModuloByRol::find($id);
+		$modulorol->modulo_id = $request->modulo;
+		$modulorol->rol_id = $request->rol;
+		$modulorol->create = $request->crear ?? 0;
+		$modulorol->read = $request->mostrar ?? 0;
+		$modulorol->update = $request->editar ?? 0;
+		$modulorol->delete = $request->eliminar ?? 0;
+		try {
+            if ($modulorol->isDirty()) {
+                $modulorol->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'modulos_has_roles')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Module by Rol";
+                $bitacora->registro($modulo->id, $modulorol->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {
