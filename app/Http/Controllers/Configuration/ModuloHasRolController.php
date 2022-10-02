@@ -178,7 +178,22 @@ class ModuloHasRolController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $modulorol = ModuloByRol::find($id);
+        try {
+            $modulorol->delete();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'modulos_has_roles')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Module";
+            $bitacora->registro($modulo->id, $modulorol->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
 }
