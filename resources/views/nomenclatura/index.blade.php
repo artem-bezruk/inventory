@@ -16,7 +16,7 @@
 			<div class="card">
 				<div class="card-header">
 					<div class="text-left">
-						<h3 class="card-title">{{ __('Nomenclatures List') }}</h3>
+						<h3 class="card-title">{{ __('Nomenclature List') }}</h3>
 					</div>
 					@if (session()->get('modulos')->nomenclaturas->c)
 						<div class="text-right">
