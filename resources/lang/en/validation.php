@@ -166,7 +166,20 @@ return [
         ],
         'capacidad' => [
         	'boolean' => 'The field must be true or false.'
-        ],
+		],
+		'crear' => [
+			'boolean' => 'The field Add must be true or false.'
+		],
+		'mostrar' => [
+			'boolean' => 'The field Show must be true or false.',
+			'required_with' => 'The field Show field is required when Add / Edit / Delete is present.'
+		],
+		'editar' => [
+			'boolean' => 'The field Edit must be true or false.'
+		],
+		'eliminar' => [
+			'boolean' => 'The field Delete must be true or false.'
+		],
     ],
     'attributes' => [],
 ];

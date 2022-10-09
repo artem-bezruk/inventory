@@ -166,7 +166,20 @@ return [
         ],
         'capacidad' => [
         	'boolean' => 'El campo debe ser verdadero o falso.'
-        ],
+		],
+		'crear' => [
+			'boolean' => 'El campo Añadir debe der verdadero o falso.'
+		],
+		'mostrar' => [
+			'boolean' => 'El campo Mostrar debe der verdadero o falso.',
+			'required_with' => 'El campo Mostrar es obligatorio cuando Crear / Editar / Eliminar está presente.'
+		],
+		'editar' => [
+			'boolean' => 'El campo Editar debe der verdadero o falso.'
+		],
+		'eliminar' => [
+			'boolean' => 'El campo Eliminar debe der verdadero o falso.'
+		],
     ],
     'attributes' => [],
 ];

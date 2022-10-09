@@ -199,8 +199,20 @@
     "Deleted Module": "Módulo Eliminado",
 	"It is filterable?": "¿Es filtrable?",
 	"Abbreviation": "Abreviatura",
-	"Nomenclature List": "Lista de Nomenclaturas",
+	"Nomenclatures List": "Lista de Nomenclaturas",
 	"Created Nomenclature": "Nomenclatura Creado",
 	"Updated Nomenclature": "Nomenclatura Actualizado",
-	"Deleted Nomenclature": "Nomenclatura Eliminado"
+	"Deleted Nomenclature": "Nomenclatura Eliminado",
+	"Roles List": "Lista de Roles",
+	"Created Rol": "Rol Creado",
+	"Updated Rol": "Rol Actualizado",
+	"Deleted Rol": "Rol Eliminado",
+	"The lower the number, the higher the priority": "A menor número, mayor sera la prioridad",
+	"Priority": "Prioridad",
+	"The relationship between Module and Rol already exists": "La relacion entre Modulo y Rol ya existe",
+	"Modules by Roles List": "Lista de Modulos por Roles",
+	"Created Module by Rol": "Modulo por Rol Creado",
+	"Updated Module by Rol": "Modulo por Rol Actualizado",
+	"Deleted Module by Rol": "Modulo por Rol Eliminado",
+	"Permissions": "Permisos"
 }
