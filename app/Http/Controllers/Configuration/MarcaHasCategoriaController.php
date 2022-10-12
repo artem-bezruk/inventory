@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Configuration;
+use Validator;
 use App\MarcaByCategoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +15,34 @@ class MarcaHasCategoriaController extends Controller
     public function index()
     {
         return view('marcascategoria.index');
-    }
+	}
+	public function marcas_has_categorias (Request $request)
+	{
+		try {
+            $all = MarcaByCategoria::where('eliminado', 0)->get();
+            $this->respuesta["data"] = [];
+            foreach ($all as $marcacategoria) {
+                $this->respuesta["data"][] = (object) [
+                    'id' => $marcacategoria->id,
+					'marca' => __($marcacategoria->marca()->marca),
+					'categoria' => __($marcacategoria->categoria()->categoria),
+                    'urlMostrar' => route("marcacategoria.show", ['locale' => app()->getLocale(), 'marcacategoria' => $marcacategoria->id]),
+                    'urlEditar' => route("marcacategoria.edit", ['locale' => app()->getLocale(), 'marcacategoria' => $marcacategoria->id]),
+                    'urlEliminar' => route("marcacategoria.destroy", ['locale' => app()->getLocale(), 'marcacategoria' => $marcacategoria->id])
+                ];
+            }
+            if (empty($this->respuesta["data"])) {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+            else {
+                $httpStatus = HttpStatus::OK;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = $e->getMessage() ?? HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
+	}
     public function create()
     {
     }
