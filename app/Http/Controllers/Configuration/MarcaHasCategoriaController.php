@@ -75,8 +75,25 @@ class MarcaHasCategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function show($id)
+    public function show($locale, $id)
     {
+        try {
+            $marcacategoria = MarcaByCategoria::find($id);
+            if (!empty($marcacategoria)) {
+                $this->respuesta["data"] = (object) [
+					"marca" => __($marcacategoria->marca()->marca),
+					"categoria" => __($marcacategoria->categoria()->categoria),
+                ];
+                return response()->view('marcascategoria.mostrar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function edit($id)
     {
