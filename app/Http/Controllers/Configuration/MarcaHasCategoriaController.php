@@ -95,11 +95,59 @@ class MarcaHasCategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function edit($id)
+    public function edit($locale, $id)
     {
+        try {
+            $marcacategoria = MarcaByCategoria::find($id);
+            if (!empty($marcacategoria)) {
+                $this->respuesta["data"] = (object) [
+                    'id' => $marcacategoria->id,
+					'marca' => $marcacategoria->marca_id,
+					'categoria' => $marcacategoria->categoria_id,
+				];
+				$this->respuesta["extras"] = (object) [
+					"marcas" => \App\Marca::where('eliminado', 0)->get(),
+					"categorias" => \App\Categoria::where('eliminado', 0)->get(),
+				];
+                return response()->view('marcascategoria.editar', $this->respuesta, HttpStatus::OK);
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["message"] = $e->getMessage() ?? HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $locale, $id)
     {
+        Validator::make($request->all(), [
+            'categoria' => ['required', 'numeric'],
+            'marca' => ['required', 'numeric'],
+		])->validate();
+		$marcacategoria = MarcaByCategoria::find($id);
+		$marcacategoria->marca_id = $request->marca;
+		$marcacategoria->categoria_id = $request->categoria;
+		try {
+        	if ($marcacategoria->isDirty()) {
+            	$marcacategoria->save();
+                $bitacora = new \App\Bitacora();
+                $modulo = \App\Modulo::where('modulo', 'marcas_has_categorias')->first();
+                $accion = \App\Accion::where('accion', 'Update')->first();
+                $descripcion = "Updated Mark by Category";
+            	$bitacora->registro($modulo->id, $marcacategoria->id, $accion->id, \Request::ip(), $descripcion);
+                $httpStatus = HttpStatus::OK;
+                $this->respuesta["mensaje"] = HttpStatus::OK();
+            }
+            else {
+                $httpStatus = HttpStatus::NOCONTENT;
+            }
+        } catch (\Exception $e) {
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+            $httpStatus = HttpStatus::ERROR;
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function destroy($id)
     {
