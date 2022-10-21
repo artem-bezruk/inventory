@@ -149,8 +149,24 @@ class MarcaHasCategoriaController extends Controller
         }
         return response()->json($this->respuesta, $httpStatus);
     }
-    public function destroy($id)
+    public function destroy($locale, $id)
     {
+        $marcacategoria = MarcaByCategoria::find($id);
+        try {
+            $marcacategoria->eliminado = 1;
+            $marcacategoria->save();
+            $bitacora = new \App\Bitacora();
+            $modulo = \App\Modulo::where('modulo', 'marcas_has_categorias')->first();
+            $accion = \App\Accion::where('accion', 'Delete')->first();
+            $descripcion = "Deleted Mark by Category";
+            $bitacora->registro($modulo->id, $marcacategoria->id, $accion->id, \Request::ip(), $descripcion);
+            $httpStatus = HttpStatus::OK;
+            $this->respuesta["mensaje"] = HttpStatus::OK();
+        } catch (\Exception $e) {
+            $httpStatus = HttpStatus::ERROR;
+            $this->respuesta["mensaje"] = HttpStatus::ERROR();
+        }
+        return response()->json($this->respuesta, $httpStatus);
     }
     public function marcascategorias ($locale, $categoria)
     {

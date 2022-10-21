@@ -215,5 +215,8 @@
 	"Updated Module by Rol": "Modulo por Rol Actualizado",
 	"Deleted Module by Rol": "Modulo por Rol Eliminado",
 	"Permissions": "Permisos",
-	"Marks by Categories List": "Lista de Marcas por Categorías"
+	"Marks by Categories List": "Lista de Marcas por Categorías",
+	"Created Mark by Category": "Marca por Categoria Creado",
+	"Updated Mark by Category": "Marca por Categoria Actualizado",
+	"Deleted Mark by Category": "Marca por Categoria Eliminado"
 }
