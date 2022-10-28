@@ -22,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
 		Route::pattern('nomenclatura', '[0-9]+');
 		Route::pattern('rol', '[0-9]+');
 		Route::pattern('modulorol', '[0-9]+');
+		Route::pattern('marcacategoria', '[0-9]+');
 		parent::boot();
 	}
 	public function map()
