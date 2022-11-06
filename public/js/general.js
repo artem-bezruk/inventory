@@ -74,7 +74,8 @@ function crearTabla (locale, id, data, columns)
 		destroy: true,
 		data: data,
 		columns: columns,
-		language: traduccion[locale]
+		language: traduccion[locale],
+		pageLength: 25
 	});
 }
 function keyPressValidarLetrasyOtrosCaracteres(event) {
